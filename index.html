@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>d'strict B2G Simulator Vol.1.1</title>
-<meta property="og:title" content="d'strict B2G Simulator Vol.1.1">
+<title>d'strict B2G Simulator Vol.1.2</title>
+<meta property="og:title" content="d'strict B2G Simulator Vol.1.2">
 <meta property="og:url" content="https://shin3164.github.io/dstrict-dx-b2g-simulator/">
-<meta property="og:description" content="2026 KOSA 노임단가 기준 공공사업 예산 시뮬레이터">
+<meta property="og:description" content="d'strict B2G 전략 예산 시뮬레이터 — 공공사업 투찰율·손익 분석 도구">
 <style>
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
 :root{
@@ -218,7 +218,7 @@ button{cursor:pointer}
 /* CARDS */
 .sc{
   background:var(--card);border-radius:var(--radius);
-  border:1px solid var(--border);margin-bottom:10px;overflow:hidden;
+  border:1px solid var(--border);margin-bottom:10px;
 }
 .sc-head{
   display:flex;align-items:center;justify-content:space-between;
@@ -559,7 +559,7 @@ body.readonly .icon-btn{pointer-events:none;opacity:.4}
       <div class="tb-logo-mark">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
       </div>
-      <span class="tb-name">d'strict B2G Simulator <span style='font-size:10px;font-weight:400;opacity:.7'>Vol.1.1</span></span>
+      <span class="tb-name">d'strict B2G Simulator <span style='font-size:10px;font-weight:400;opacity:.7'>Vol.1.2</span></span>
     </div>
     <!-- 네비게이션 메뉴 -->
     <div id="tb-nav" style="display:flex;align-items:center;gap:2px;margin-left:12px">
@@ -595,7 +595,7 @@ body.readonly .icon-btn{pointer-events:none;opacity:.4}
     </button>
     <button class="act-btn" id="btn-snapshot">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-      <span class="act-btn-txt">스냅샷</span>
+      <span class="act-btn-txt">화면 저장</span>
     </button>
     <button class="act-btn green" id="btn-export">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -617,7 +617,7 @@ body.readonly .icon-btn{pointer-events:none;opacity:.4}
         <div style="display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:14px;background:var(--purple);margin-bottom:14px">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
         </div>
-        <h1 style="font-size:22px;font-weight:700;color:var(--text);letter-spacing:-0.5px;margin-bottom:6px">d'strict B2G Simulator Vol.1.1</h1>
+        <h1 style="font-size:22px;font-weight:700;color:var(--text);letter-spacing:-0.5px;margin-bottom:6px">d'strict B2G Simulator Vol.1.2</h1>
         <p style="font-size:13px;color:var(--muted);letter-spacing:0.2px">2026 KOSA 노임단가 기준 · SW사업 대가산정 가이드(2025 개정판)</p>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" id="home-menu-grid">
@@ -653,9 +653,11 @@ body.readonly .icon-btn{pointer-events:none;opacity:.4}
       <div style="display:flex;border-bottom:1px solid var(--border);margin-bottom:18px;overflow-x:auto">
         <button class="pp-tab on" data-pptab="list" onclick="switchPPTab('list')" style="padding:9px 16px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;border-bottom:2px solid var(--purple);color:var(--purple);margin-bottom:-1px;letter-spacing:0.2px;white-space:nowrap;font-family:var(--font)">📋 목록</button>
         <button class="pp-tab" data-pptab="compare" onclick="switchPPTab('compare')" style="padding:9px 16px;font-size:12px;font-weight:500;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted);margin-bottom:-1px;letter-spacing:0.2px;white-space:nowrap;font-family:var(--font)">📊 비교 분석</button>
+        <button class="pp-tab" data-pptab="trash" onclick="switchPPTab('trash')" style="padding:9px 16px;font-size:12px;font-weight:500;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted);margin-bottom:-1px;letter-spacing:0.2px;white-space:nowrap;font-family:var(--font)">🗑️ 휴지통</button>
       </div>
       <div id="pp-list" style="display:block"><div id="pp-project-list"></div></div>
       <div id="pp-compare" style="display:none"><div id="pp-compare-wrap"></div></div>
+      <div id="pp-trash" style="display:none"><div id="pp-trash-wrap"></div></div>
     </div>
   </div>
 
@@ -669,21 +671,30 @@ body.readonly .icon-btn{pointer-events:none;opacity:.4}
   <div id="modal-export" class="modal-overlay" style="display:none">
     <div class="modal-box">
       <div class="modal-head">
-        <span class="modal-title">데이터 추출</span>
+        <span class="modal-title">📤 데이터 추출</span>
         <button class="modal-close" data-close="modal-export">✕</button>
       </div>
       <div class="modal-body">
-        <div class="export-opt" id="exp-csv">
-          <div class="export-icon" style="background:var(--green-bg)">📊</div>
-          <div><div class="export-name">CSV 파일 (.csv)</div><div class="export-desc">엑셀 호환. 손익계산서, 시나리오 비교, 인건비 내역 포함.</div></div>
+        <div class="export-opt" id="exp-csv" style="border-left:3px solid #217346">
+          <div class="export-icon" style="background:#EAF3DE;font-size:22px">📊</div>
+          <div>
+            <div class="export-name" style="color:#217346">엑셀 (.xlsx)</div>
+            <div class="export-desc">손익계산서 · 인건비 상세 · 외주비 카테고리 · 시나리오 비교. 원 단위 회계 포맷 적용.</div>
+          </div>
         </div>
-        <div class="export-opt" id="exp-json">
-          <div class="export-icon" style="background:var(--blue-bg)">📋</div>
-          <div><div class="export-name">JSON 파일 (.json)</div><div class="export-desc">전체 입력값 + 계산 결과 구조화. 시스템 연동용.</div></div>
+        <div class="export-opt" id="exp-json" style="border-left:3px solid #185FA5">
+          <div class="export-icon" style="background:var(--blue-bg);font-size:22px">📝</div>
+          <div>
+            <div class="export-name" style="color:var(--blue)">보고서 (.txt / Word 붙여넣기)</div>
+            <div class="export-desc">구조화된 텍스트 보고서. Word에 붙여넣어 바로 활용 가능.</div>
+          </div>
         </div>
-        <div class="export-opt" id="exp-txt">
-          <div class="export-icon" style="background:var(--amber-bg)">📄</div>
-          <div><div class="export-name">보고서 텍스트 (.txt)</div><div class="export-desc">Audit 내역 + 전체 요약 텍스트 형식.</div></div>
+        <div class="export-opt" id="exp-txt" style="border-left:3px solid #C9511C">
+          <div class="export-icon" style="background:#FAECE7;font-size:22px">📑</div>
+          <div>
+            <div class="export-name" style="color:#C9511C">PPT 노트 (.txt)</div>
+            <div class="export-desc">프레젠테이션 슬라이드별 발표 노트 형식. 복사하여 PPT 노트 란에 바로 사용.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -757,17 +768,35 @@ body.readonly .icon-btn{pointer-events:none;opacity:.4}
 
   <!-- ── Snapshot Modal ── -->
   <div id="modal-snapshot" class="modal-overlay" style="display:none">
-    <div class="modal-box">
+    <div class="modal-box" style="max-width:480px">
       <div class="modal-head">
-        <span class="modal-title">스냅샷 관리</span>
+        <span class="modal-title">📷 화면 저장</span>
         <button class="modal-close" data-close="modal-snapshot">✕</button>
       </div>
       <div class="modal-body">
-        <div style="display:flex;gap:8px;margin-bottom:14px">
-          <input id="snap-name-inp" type="text" class="inp" placeholder="스냅샷 이름 (예: 1차 견적 85% 시나리오)" style="flex:1">
-          <button class="btn-cta" id="btn-snap-save">저장</button>
+        <!-- 저장 형식 선택 -->
+        <div style="margin-bottom:14px">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px">저장 형식</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+            <div class="export-opt" id="snap-jpeg" onclick="captureSnapshot('jpeg')" style="cursor:pointer">
+              <div class="export-icon" style="background:var(--blue-bg)">🖼️</div>
+              <div><div class="export-name">JPEG 이미지</div><div class="export-desc">결과 화면을 고화질 이미지로 저장</div></div>
+            </div>
+            <div class="export-opt" id="snap-gif" onclick="captureSnapshot('gif')" style="cursor:pointer">
+              <div class="export-icon" style="background:var(--purple-bg)">🎞️</div>
+              <div><div class="export-name">PNG 이미지</div><div class="export-desc">투명 배경 지원 고품질 스냅샷</div></div>
+            </div>
+          </div>
         </div>
-        <div id="snap-list"></div>
+        <!-- 기존 스냅샷 목록 저장 -->
+        <div style="border-top:1px solid var(--border);padding-top:14px">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px">데이터 스냅샷 저장</div>
+          <div style="display:flex;gap:8px;margin-bottom:10px">
+            <input id="snap-name-inp" type="text" class="inp" placeholder="스냅샷 이름 (예: 1차 견적 85%)" style="flex:1;font-size:12px">
+            <button class="btn-cta" id="btn-snap-save" style="padding:6px 14px;font-size:12px">저장</button>
+          </div>
+          <div id="snap-list"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -840,15 +869,15 @@ const ROLES=[
   {id:'dev',   label:'개발',   color:'#185FA5'},
 ];
 const GCOLS={S:'#A32D2D',A:'#854F0B',B:'#185FA5',C:'#3B6D11'};
-const OCATS=[{id:'contents',label:'콘텐츠',color:'#534AB7'},{id:'hardware',label:'하드웨어',color:'#185FA5'},{id:'interior',label:'인테리어',color:'#0F6E56'},{id:'construct',label:'건축/시공',color:'#993C1D'},{id:'direct',label:'직접경비',color:'#0F6E56'}];
+const OCATS=[{id:'contents',label:'콘텐츠',color:'#534AB7'},{id:'hardware',label:'하드웨어',color:'#185FA5'},{id:'interior',label:'인테리어',color:'#0F6E56'},{id:'construct',label:'건축/시공',color:'#993C1D'},{id:'direct',label:'직접경비',color:'#854F0B'}];
 const SC_DEF=[{key:'worst',label:'Worst',color:'#A32D2D'},{key:'avg',label:'Average',color:'#854F0B'},{key:'best',label:'Best',color:'#3B6D11'}];
 const DAILY_DEF={S:568663,A:427566,B:336666,C:302999};
 const PNL_DEFS=[
-  {label:'낙찰금액 (VAT포함)',key:'ct',indent:false,bold:false},
+  {label:'투찰금액 (VAT포함)',key:'ct',indent:false,bold:false},
   {label:'공급가액 (매출)',key:'rv',indent:false,bold:true},
   {label:'(-) 인건비',key:'lc',indent:true,neg:true},
   {label:'(-) 외주비 공급가액',key:'os',indent:true,neg:true},
-  {label:'(-) 서버/기타',key:'svc',indent:true,neg:true},
+  {label:'(-) 서버/직접경비',key:'svc',indent:true,neg:true},
   {label:'공헌이익',key:'cn',indent:false,bold:true,sep:true},
   {label:'(-) 간접비',key:'ic',indent:true,neg:true},
   {label:'영업이익',key:'op',indent:false,bold:true,sep:true,accent:true},
@@ -954,15 +983,18 @@ const S={
   gd:   lsGet('b2g4_gd',  {S:568663,A:427566,B:336666,C:302999}),
   labor:lsGet('b2g4_labor',[{id:1,grade:'A',role:'dev',count:3,mm:6.0},{id:2,grade:'S',role:'pm',count:1,mm:6.0},{id:3,grade:'B',role:'plan',count:2,mm:4.0}]),
   outs: lsGet('b2g4_outs', []),
-  svc:  lsGet('b2g4_svc',  10000000),
+  svc:  lsGet('b2g4_svc',  0),
   indr: lsGet('b2g4_indr', 10),
   sc:   lsGet('b2g4_sc',   {worst:85,avg:90,best:95}),
   projectName: lsGet('b2g4_projectName',''),
+  baseVatIncl: lsGet('b2g4_baseVatIncl', true),
   memo: lsGet('b2g4_memo', ''),
   minBid: lsGet('b2g4_minBid', 70),
   outsMemo: lsGet('b2g4_outsMemo',''),
 };
 const UI={pOpen:false,tab:'dashboard',detId:null,_uid:400};
+// uid 충돌 방지: 로드된 데이터의 최대 id로 초기화
+(function(){const ids=[...lsGet('b2g4_labor',[]),...lsGet('b2g4_outs',[])].map(r=>Number(r.id)||0);if(ids.length)UI._uid=Math.max(UI._uid,...ids);})()
 function uid(){return ++UI._uid;}
 function saveKey(k){lsSet('b2g4_'+k,S[k]);}
 function saveAll(){['base','bid','oh','tr','wd','gd','labor','outs','svc','indr','sc','memo','minBid','projectName','outsMemo'].forEach(saveKey);}
@@ -999,7 +1031,8 @@ function calcMM(k){
 }
 function getMMs(){const c={};['S','A','B','C'].forEach(k=>c[k]=calcMM(k));return c;}
 function compute(rate){
-  const ct=fl(S.base*(rate/100)),rv=fl(ct/1.1);
+  const ct=fl(S.base*(rate/100));
+  const rv=S.baseVatIncl!==false?fl(ct/1.1):ct;
   const mms=getMMs();
   let lc=0;S.labor.forEach(r=>lc+=fl(mms[r.grade].mm*r.count*r.mm));
   let os=0,svcTotal=0;
@@ -1022,7 +1055,7 @@ function compute(rate){
 function autoSetScenarios(){
   let bestRate=null, worstRate=null;
 
-  const minR=S.minBid||70;
+  const minR=Math.max(50,Math.min(S.minBid||70,99));
   // Best: minBid→100, 이익률 > 30% 인 최저 투찰율
   for(let r=minR; r<=100.001; r+=0.01){
     const rr=Math.round(r*100)/100;
@@ -1080,7 +1113,28 @@ function markDirty(){
   if(cbBtn2){cbBtn2.style.background='var(--amber)';cbBtn2.style.color='#fff';cbBtn2.style.boxShadow='0 2px 8px rgba(133,79,11,.3)',cbBtn2.style.animation='pulse-amber .9s infinite';}
   if(cbTxt2)cbTxt2.textContent='변경 적용 ●';
 }
+function checkMissingFields(){
+  const missing=[];
+  if(!S.projectName||!S.projectName.trim()) missing.push('프로젝트명');
+  if(!S.base||S.base<=0) missing.push('기초금액');
+  else if(S.base<1000000) missing.push('기초금액 (최소 100만원 이상 권장)');
+  if(!S.labor||S.labor.length===0) missing.push('투입 인력 (1명 이상)');
+  return missing;
+}
+
 function doConfirm(){
+  if(IS_READONLY)return;
+
+  // 누락 항목 체크
+  const missing=checkMissingFields();
+  if(missing.length>0){
+    showMissingWarning(missing);
+    return; // 경고 모달에서 사용자가 결정
+  }
+  doConfirmProceed();
+}
+
+function doConfirmProceed(){
   if(IS_READONLY)return;
 
   // 1) 시나리오 투찰율 자동 계산
@@ -1117,6 +1171,48 @@ function doConfirm(){
     renderRightFull();
   }
 }
+function showMissingWarning(missing){
+  // 기존 모달 있으면 제거
+  const old=document.getElementById('modal-missing');
+  if(old)old.remove();
+
+  const modal=document.createElement('div');
+  modal.id='modal-missing';
+  modal.className='modal-overlay';
+  modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9500;display:flex;align-items:center;justify-content:center;padding:20px';
+  modal.innerHTML=`
+    <div style="background:var(--card);border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);width:100%;max-width:400px;overflow:hidden">
+      <div style="padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px">
+        <div style="width:36px;height:36px;border-radius:9px;background:var(--amber-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);letter-spacing:-0.3px">입력 누락 항목이 있습니다</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">계속 진행하거나 입력 후 다시 시도하세요.</div>
+        </div>
+      </div>
+      <div style="padding:16px 20px">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;font-weight:600;letter-spacing:0.3px">누락된 항목</div>
+        <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:18px">
+          ${missing.map(m=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--amber-bg);border-radius:8px;border:1px solid #f0d9a0">
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--amber);flex-shrink:0;display:inline-block"></span>
+            <span style="font-size:12px;color:var(--amber);font-weight:600">${m}</span>
+          </div>`).join('')}
+        </div>
+        <div style="display:flex;gap:8px">
+          <button onclick="document.getElementById('modal-missing').remove()" style="flex:1;padding:10px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--muted);cursor:pointer;font-family:var(--font)">
+            ← 돌아가기
+          </button>
+          <button onclick="document.getElementById('modal-missing').remove();doConfirmProceed();" style="flex:1;padding:10px;font-size:12px;font-weight:700;border:none;border-radius:8px;background:var(--amber);color:#fff;cursor:pointer;font-family:var(--font)">
+            무시하고 진행
+          </button>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click',e=>{if(e.target===modal)modal.remove();});
+}
+
 function showDiff(prev,cur){
   const el=document.getElementById('diff-panel');if(!el)return;
   if(!prev){el.className='';el.innerHTML='';return;}
@@ -1279,18 +1375,38 @@ function buildLeft(){
             oninput="S.projectName=this.value;saveKey('projectName')"
             style="font-size:13px" autocomplete="off">
         </div>
-        ${makeMoneyInputHTML({id:'inp_base',value:S.base,label:'기초금액 (VAT 포함)',hint:`낙찰금액 → ${fmtW(fl(S.base*S.bid/100))}`})}
-        ${makeDualHTML({id:'bid',label:'현재 투찰율',value:S.bid,min:50,max:100,step:0.01,dec:2,hint:'소수점 2자리',color:'#185FA5'})}
-        ${makeDualHTML({id:'minBid',label:'최소 입찰율 (하한)',value:S.minBid,min:50,max:100,step:0.01,dec:2,hint:'시나리오 Best/Worst 탐색 기준',color:'#534AB7'})}
+        <div style="margin-bottom:13px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+            <label class="lbl" style="margin:0">기초금액</label>
+            <div style="display:flex;align-items:center;gap:6px">
+              <span style="font-size:11px;color:var(--muted)">VAT</span>
+              <button id="btn-vat-toggle" onclick="toggleBaseVat()" style="
+                display:flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;
+                font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;letter-spacing:0.2px;
+                border:1.5px solid ${S.baseVatIncl!==false?'var(--blue)':'var(--border)'};
+                background:${S.baseVatIncl!==false?'var(--blue-bg)':'var(--bg)'};
+                color:${S.baseVatIncl!==false?'var(--blue)':'var(--hint)'};
+                font-family:var(--font);
+              ">${S.baseVatIncl!==false?'✓ 포함':'✕ 별도'}</button>
+            </div>
+          </div>
+          <div class="money-wrap">
+            <input id="inp_base" type="text" inputmode="numeric" pattern="[0-9,]*"
+              class="inp" value="${fmtComma(S.base)}" autocomplete="off" spellcheck="false"
+              style="padding-right:26px;font-weight:600">
+            <span class="money-unit">원</span>
+          </div>
+          <div id="inp_base_hint" class="hint-txt">투찰금액 → ${fmtW(fl(S.base*(S.bid/100)))}</div>
+        </div>
+        ${makeDualHTML({id:'bid',label:'현재 투찰율',value:S.bid,min:50,max:100,step:0.01,dec:2,color:'#185FA5'})}
+        ${makeDualHTML({id:'minBid',label:'최소 입찰율 (하한)',value:S.minBid,min:50,max:100,step:0.01,dec:2,color:'#534AB7'})}
       </div>
     </div>
 
     <div class="sc" id="param_card">
       <div class="param-head" id="param_head">
         <div style="display:flex;align-items:center;gap:8px">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-          <span class="sc-title" style="margin:0">노임단가 & 요율 설정</span>
-          <span class="bd" style="background:var(--purple-bg);color:var(--purple)">2025 개정</span>
+          <span class="sc-title" style="margin:0">노임단가</span>
         </div>
         <div style="display:flex;align-items:center;gap:8px">
           <span id="param_summary" style="font-size:11px;color:var(--hint);letter-spacing:0.2px">제경비 ${S.oh}% · 기술료 ${S.tr}%</span>
@@ -1380,7 +1496,13 @@ function buildLeft(){
 
     <div class="sc">
       <div class="sc-head"><span class="sc-title">간접비율</span></div>
-      <div class="sc-body">${makeDualHTML({id:'indr',label:'사업 간접비율',value:S.indr,min:0,max:30,step:1,dec:0,hint:'순매출액 대비',color:'#0F6E56'})}</div>
+      <div class="sc-body">
+        ${makeDualHTML({id:'indr',label:'사업 간접비율',value:S.indr,min:0,max:30,step:1,dec:0,hint:'순매출액 대비',color:'#0F6E56'})}
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+          <div style="font-size:11px;font-weight:600;color:var(--muted);margin-bottom:6px">서버 / 기타 고정비 <span style="font-weight:400;color:var(--hint)">(VAT 별도, 직접경비 합산)</span></div>
+          ${makeMoneyInputHTML({id:'inp_svc',value:S.svc||0,label:'',hint:''})}
+        </div>
+      </div>
     </div>
 
 
@@ -1466,14 +1588,32 @@ function buildOutsHTML(){
           <span class="money-unit">원</span>
         </div>
         <button class="vat-btn${row.vatIncl?' on':''}" data-vat="${row.id}">${row.vatIncl?'✓ VAT포함':'VAT별도'}</button>
+        <button onclick="onCostChange();const b=this;b.textContent='✓';b.style.background='var(--kpi-green)';setTimeout(()=>{b.textContent='적용';b.style.background='var(--purple)';},1200)" style="padding:3px 9px;font-size:11px;font-weight:600;border:none;border-radius:5px;background:var(--purple);color:#fff;cursor:pointer;font-family:var(--font);flex-shrink:0">적용</button>
       </div>
-      ${v>0?`<div style="margin-top:5px;font-size:11px;color:var(--hint);letter-spacing:0.2px">→ 공급가액: <strong style="color:var(--muted)">${fmtF(sup)}</strong></div>`:''}
+      ${v>0?`<div class="sup-display" style="margin-top:5px;font-size:11px;color:var(--hint);letter-spacing:0.2px">→ 공급가액 <strong style="color:var(--muted)">${fmtW(sup)}</strong></div>`:''}
     </div>`;
   }).join('');
 }
 
+function toggleBaseVat(){
+  S.baseVatIncl = S.baseVatIncl===false ? true : false;
+  saveKey('baseVatIncl');
+  const btn=document.getElementById('btn-vat-toggle');
+  if(btn){
+    btn.textContent=S.baseVatIncl!==false?'✓ 포함':'✕ 별도';
+    btn.style.borderColor=S.baseVatIncl!==false?'var(--blue)':'var(--border)';
+    btn.style.background=S.baseVatIncl!==false?'var(--blue-bg)':'var(--bg)';
+    btn.style.color=S.baseVatIncl!==false?'var(--blue)':'var(--hint)';
+  }
+  const hint=document.getElementById('inp_base_hint');
+  const r=compute(S.bid);
+  if(hint)hint.textContent='투찰금액 → '+fmtW(fl(S.base*(S.bid/100)))+(S.baseVatIncl!==false?' · 공급가액 '+fmtW(r.rv):'');
+  onCostChange();
+}
+
 function bindLeftEvents(){
-  bindMoneyInput('inp_base',()=>S.base,v=>S.base=v,()=>{saveKey('base');setText('inp_base_hint',`낙찰금액 → ${fmtW(fl(S.base*S.bid/100))}`);onCostChange();});
+  bindMoneyInput('inp_svc',()=>S.svc||0,v=>{S.svc=v;saveKey('svc');onCostChange();});
+  bindMoneyInput('inp_base',()=>S.base,v=>S.base=v,()=>{saveKey('base');const r2=compute(S.bid);setText('inp_base_hint','투찰금액 → '+fmtW(fl(S.base*(S.bid/100)))+(S.baseVatIncl!==false?' · 공급가액 '+fmtW(r2.rv):''));onCostChange();});
   bindDualSlider({id:'bid',min:70,max:100,step:0.01,dec:2,onCommit:v=>onBidChange(v),color:'#185FA5'});
   bindDualSlider({id:'oh',min:144,max:154,step:1,dec:0,onCommit:v=>{S.oh=Math.round(v);saveKey('oh');onParamChange();},color:'#534AB7'});
   bindDualSlider({id:'tr',min:20,max:40,step:1,dec:0,onCommit:v=>{S.tr=Math.round(v);saveKey('tr');onParamChange();},color:'#534AB7'});
@@ -1507,13 +1647,18 @@ function bindLeftEvents(){
   });
   leftEl.addEventListener('focus',e=>{if(e.target.dataset.of==='amount'){const n=parseComma(e.target.value);e.target.value=n===0?'':String(n);e.target.select();}},true);
   leftEl.addEventListener('input',e=>{
-    if(e.target.dataset.of==='amount'&&!IS_READONLY){const row=S.outs.find(r=>r.id==e.target.dataset.oid);if(!row)return;row.amount=parseInt(e.target.value.replace(/[^\d]/g,''),10)||0;saveKey('outs');const wrap=e.target.closest('[data-outs-row]');if(wrap){const v=row.amount,sup=row.vatIncl?fl(v/1.1):v;let sd=wrap.querySelector('.sup-display');if(!sd){sd=document.createElement('div');sd.className='sup-display';sd.style.cssText='margin-top:5px;font-size:11px;color:var(--hint);letter-spacing:0.2px';wrap.appendChild(sd);}sd.innerHTML=v>0?`→ 공급가액: <strong style="color:var(--muted)">${fmtF(sup)}</strong>`:'';}onCostChange();}
+    if(e.target.dataset.of==='amount'&&!IS_READONLY){const row=S.outs.find(r=>r.id==e.target.dataset.oid);if(!row)return;row.amount=Math.max(0,parseInt(e.target.value.replace(/[^\d]/g,''),10)||0);saveKey('outs');const wrap=e.target.closest('[data-outs-row]');if(wrap){const v=row.amount,sup=row.vatIncl?fl(v/1.1):v;let sd=wrap.querySelector('.sup-display');if(!sd){sd=document.createElement('div');sd.className='sup-display';sd.style.cssText='margin-top:5px;font-size:11px;color:var(--hint);letter-spacing:0.2px';wrap.appendChild(sd);}sd.innerHTML=v>0?`→ 공급가액 <strong style="color:var(--muted)">${fmtW(sup)}</strong>`:'';}onCostChange();}
   });
   leftEl.addEventListener('blur',e=>{if(e.target.dataset.of==='amount'){const row=S.outs.find(r=>r.id==e.target.dataset.oid);if(row)e.target.value=fmtComma(row.amount);}},true);
 }
 
 function refreshLaborList(){setHTML('labor_list',buildLaborHTML());setText('lbl_labor',fmtW(compute(S.bid).lc));}
-function refreshOutsList(){setHTML('outs_list',buildOutsHTML());setText('lbl_outs','공급가액 '+fmtW(compute(S.bid).os));}
+function refreshOutsList(){
+  setHTML('outs_list',buildOutsHTML());
+  const r=compute(S.bid);
+  const allOutsTotal=r.os+r.svc-(S.svc||0); // os(외주비) + directTotal
+  setText('lbl_outs','공급가액 '+fmtW(r.os+(r.svc-(S.svc||0))));
+}
 
 /* ============================================================
    RIGHT PANEL
@@ -1569,8 +1714,7 @@ function buildRight(){
     </div>
     <div id="tab_content">${buildTabHTML(res,scr)}</div>
     <div style="margin-top:14px;padding:10px 0;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--hint);line-height:1.7;letter-spacing:0.2px">
-      참고: 한국소프트웨어산업협회 발행 <strong style="color:var(--muted)">SW사업 대가산정 가이드(2025 개정판)</strong><br>
-      2026년 노임단가 기준 · 원 단위 미만 절삭(Floor) · d'strict B2G Simulator
+      d'strict 2026년 노임단가 기준 · 원 단위 미만 절삭 · d'strict B2G Simulator
     </div>
   `;
   el.addEventListener('click',e=>{
@@ -1578,14 +1722,14 @@ function buildRight(){
     if(tab){
       UI.tab=tab;
       document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));
-      const r2=compute(S.bid);setHTML('tab_content',buildTabHTML(r2,{minBid:compute(S.minBid||70),cur:r2}));
+      if(BASELINE){const r2=compute(S.bid);setHTML('tab_content',buildTabHTML(r2,{minBid:compute(S.minBid||70),cur:r2}));}
     }
   });
 }
 
 function buildKPIHTML(res){
   return`
-    <div class="kpi"><div class="kpi-label">낙찰금액(VAT포함)</div><div class="kpi-value">${fmtW(res.ct)}</div><div class="kpi-sub">투찰율 ${S.bid.toFixed(2)}%</div></div>
+    <div class="kpi"><div class="kpi-label">투찰금액(VAT포함)</div><div class="kpi-value">${fmtW(res.ct)}</div><div class="kpi-sub">투찰율 ${S.bid.toFixed(2)}%</div></div>
     <div class="kpi" style="background:var(--blue-bg);border-color:#b5d4f4"><div class="kpi-label">공급가액(매출)</div><div class="kpi-value" style="color:var(--blue)">${fmtW(res.rv)}</div><div class="kpi-sub">VAT 제외</div></div>
     <div class="kpi" style="background:var(--red-bg);border-color:#f5b7b7"><div class="kpi-label">총 변동비</div><div class="kpi-value" style="color:var(--red)">${fmtW(res.dt)}</div></div>
     <div class="kpi" style="background:${mbg(res.mg)};border-color:${mbdr(res.mg)}"><div class="kpi-label">영업이익</div><div class="kpi-value" style="color:${mcol(res.mg)}">${fmtW(res.op)}</div></div>
@@ -1612,7 +1756,7 @@ function updatePnL(){const el=document.getElementById('pnl_body');if(el)el.inner
 function buildScBodyHTML(scr){
   const skys=[{k:'minBid',isMid:true},{k:'cur',isCur:true}];
   const rows=[
-    {label:'낙찰금액',key:'ct'},
+    {label:'투찰금액',key:'ct'},
     {label:'공급가액',key:'rv'},
     {label:'인건비',key:'lc'},
     {label:'외주비',key:'os'},
@@ -1648,27 +1792,39 @@ function buildTabHTML(res,scr){
 function buildDashboardHTML(res){
   const totalCost=res.rv;
   const costSegs=[{name:'인건비',v:fl(res.lc),c:'#185FA5'},{name:'외주비',v:fl(res.os),c:'#534AB7'},{name:'서버/기타',v:fl(res.svc),c:'#854F0B'},{name:'간접비',v:fl(res.ic),c:'#73726c'},{name:'영업이익',v:Math.max(0,fl(res.op)),c:'#3B6D11'}].filter(d=>d.v>0);
-  const catData=OCATS.map(cat=>{const t=S.outs.filter(r=>r.catId===cat.id).reduce((s,r)=>{const v=parseFloat(r.amount)||0;return s+(r.vatIncl?fl(v/1.1):v);},0);return{name:cat.label,v:t,color:cat.color};});
+  // catData: 입력된 카테고리별 실제 외주비 집계 (모든 카테고리 표시)
+  const catData=OCATS.map(cat=>{
+    const t=S.outs.filter(r=>r.catId===cat.id).reduce((s,r)=>{const v=Math.max(0,parseFloat(r.amount)||0);return s+(r.vatIncl?fl(v/1.1):v);},0);
+    return{name:cat.label,v:t,color:cat.color};
+  }).filter(d=>d.v>0);  // 값 없는 카테고리 제외 → 바차트 공간 최적화
+  // 서버/기타 고정비(S.svc)가 있으면 별도 표시
+  if(S.svc>0)catData.push({name:'서버/기타(고정)',v:S.svc,color:'#73726c'});
   const linePts=[];for(let r=70;r<=100;r+=0.5)linePts.push({x:r,y:+compute(r).mg.toFixed(2)});
   const markPts=[...SC_DEF.map(s=>({x:S.sc[s.key],color:s.color,r:5})),{x:S.bid,color:'#185FA5',r:7}];
 
   return`
-    <!-- 비용구조(풀폭) + 외주비 카테고리(사이드) -->
-    <div class="chart-grid-2col" style="display:grid;grid-template-columns:3fr 2fr;gap:10px;margin-bottom:12px">
+    <!-- 비용구조 + 외주비 카테고리 -->
+    <div class="chart-grid-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
       <div class="sc" style="margin:0">
-        <div class="sc-head"><span class="sc-title">매출 대비 비용 구조</span></div>
+        <div class="sc-head">
+          <span class="sc-title">매출 대비 비용 구조</span>
+          <span style="font-size:11px;color:var(--blue);font-weight:700">전체 ${fmtW(totalCost)}</span>
+        </div>
         <div class="sc-body">
-          <div style="display:flex;align-items:center;gap:16px">
-            ${makeDonutSVG(costSegs,totalCost,160)}
-            <div style="display:flex;flex-direction:column;gap:8px;flex:1">
+          <div style="display:flex;align-items:center;gap:20px">
+            ${makeDonutSVG(costSegs,totalCost,200)}
+            <div style="display:flex;flex-direction:column;gap:7px;flex:1">
               ${costSegs.map(d=>`
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
-                  <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)">
-                    <span style="width:9px;height:9px;border-radius:2px;background:${d.c};display:inline-block;flex-shrink:0"></span>${d.name}
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
+                  <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);min-width:0">
+                    <span style="width:8px;height:8px;border-radius:2px;background:${d.c};display:inline-block;flex-shrink:0"></span>${d.name}
                   </span>
-                  <span style="font-size:13px;font-weight:700;color:var(--text)">${totalCost>0?((d.v/totalCost)*100).toFixed(1):0}%</span>
+                  <div style="text-align:right;flex-shrink:0">
+                    <span style="font-size:12px;font-weight:700;color:var(--text)">${fmtW(d.v)}</span>
+                    <span style="font-size:10px;color:var(--hint);margin-left:3px">${totalCost>0?((d.v/totalCost)*100).toFixed(1):0}%</span>
+                  </div>
                 </div>
-                <div style="height:4px;border-radius:2px;background:var(--border);overflow:hidden">
+                <div style="height:3px;border-radius:2px;background:var(--border);overflow:hidden">
                   <div style="height:100%;border-radius:2px;background:${d.c};width:${totalCost>0?((d.v/totalCost)*100).toFixed(1):0}%;transition:width .4s"></div>
                 </div>`).join('')}
             </div>
@@ -1676,9 +1832,13 @@ function buildDashboardHTML(res){
         </div>
       </div>
       <div class="sc" style="margin:0">
-        <div class="sc-head"><span class="sc-title">외주비 카테고리</span></div>
+        <div class="sc-head">
+          <span class="sc-title">외주비 / 직접경비 카테고리</span>
+          <span style="font-size:11px;color:var(--purple);font-weight:700">전체 ${fmtW(catData.reduce((s,d)=>s+d.v,0))}</span>
+        </div>
         <div class="sc-body">
           ${makeBarSVG(catData,200)}
+          ${(()=>{const tot2=catData.reduce((s,d)=>s+d.v,0);const items=catData.filter(d=>d.v>0);if(!items.length)return'';return '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">'+items.map(d=>'<span style="display:flex;align-items:center;gap:4px;font-size:11px"><span style="width:7px;height:7px;border-radius:1px;background:'+d.color+';display:inline-block"></span><span style="color:var(--muted)">'+d.name+'</span><strong style="color:var(--text)">'+fmtW(d.v)+'</strong><span style="color:var(--hint)">'+(tot2>0?((d.v/tot2)*100).toFixed(0):'0')+'%</span></span>').join('')+'</div>';})()}
         </div>
       </div>
     </div>
@@ -1711,7 +1871,7 @@ function buildAuditHTML(res){
   const txt=[
     '━━ ① 매출 산출 ━━',
     `기초금액 (VAT포함)       = ${fmtF(S.base)}`,
-    `낙찰금액 (×${S.bid.toFixed(2)}%)      = ${fmtF(res.ct)}`,
+    `투찰금액 (×${S.bid.toFixed(2)}%)      = ${fmtF(res.ct)}`,
     `공급가액 (÷1.1 VAT제외) = ${fmtF(res.rv)}`,
     '','━━ ② 인건비 상세 ━━',...lines,`인건비 합계              = ${fmtF(res.lc)}`,
     '','━━ ③ 공헌이익 산출 ━━',
@@ -1733,7 +1893,7 @@ function buildAuditHTML(res){
 function renderRightFull(){
   const res=compute(S.bid),scr={minBid:compute(S.minBid||70),cur:res};
   setHTML('tab_content',buildTabHTML(res,scr));
-  const h=document.getElementById('inp_base_hint');if(h)h.textContent=`낙찰금액 → ${fmtW(fl(S.base*S.bid/100))}`;
+  const h=document.getElementById('inp_base_hint');if(h)h.textContent=`투찰금액 → ${fmtW(fl(S.base*S.bid/100))}`;
 }
 
 /* ============================================================
@@ -1741,24 +1901,45 @@ function renderRightFull(){
 ============================================================ */
 function makeDonutSVG(segs,total,size){
   if(!segs.length)return`<div style="height:${size}px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--hint);background:var(--bg);border-radius:8px">데이터 없음</div>`;
-  const cx=size/2,cy=size/2,R=size*.42,r=size*.22;
-  let paths='',ang=-Math.PI/2,sum=segs.reduce((s,d)=>s+d.v,0);
-  segs.forEach(seg=>{const sl=(seg.v/sum)*2*Math.PI,x1=cx+R*Math.cos(ang),y1=cy+R*Math.sin(ang),x2=cx+R*Math.cos(ang+sl),y2=cy+R*Math.sin(ang+sl),xi1=cx+r*Math.cos(ang),yi1=cy+r*Math.sin(ang),xi2=cx+r*Math.cos(ang+sl),yi2=cy+r*Math.sin(ang+sl),lg=sl>Math.PI?1:0;paths+=`<path d="M${xi1},${yi1} L${x1},${y1} A${R},${R} 0 ${lg},1 ${x2},${y2} L${xi2},${yi2} A${r},${r} 0 ${lg},0 ${xi1},${yi1}" fill="${seg.c}" stroke="#fff" stroke-width="2"/>`;ang+=sl;});
-  return`<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="display:block;margin:0 auto">${paths}<text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1a18">${segs.length}항목</text></svg>`;
+  const cx=size/2,cy=size/2,R=size*.42,r=size*.22,Rm=(R+r)/2;
+  let paths='',labels='',ang=-Math.PI/2,sum=segs.reduce((s,d)=>s+d.v,0);
+  segs.forEach(seg=>{
+    const sl=(seg.v/sum)*2*Math.PI;
+    const x1=cx+R*Math.cos(ang),y1=cy+R*Math.sin(ang),x2=cx+R*Math.cos(ang+sl),y2=cy+R*Math.sin(ang+sl);
+    const xi1=cx+r*Math.cos(ang),yi1=cy+r*Math.sin(ang),xi2=cx+r*Math.cos(ang+sl),yi2=cy+r*Math.sin(ang+sl);
+    const lg=sl>Math.PI?1:0;
+    paths+=`<path d="M${xi1},${yi1} L${x1},${y1} A${R},${R} 0 ${lg},1 ${x2},${y2} L${xi2},${yi2} A${r},${r} 0 ${lg},0 ${xi1},${yi1}" fill="${seg.c}" stroke="#fff" stroke-width="2"/>`;
+    // 5% 이상인 세그먼트만 레이블 표시
+    const pct=(seg.v/sum)*100;
+    if(pct>=5){
+      const midAng=ang+sl/2;
+      const lx=cx+Rm*Math.cos(midAng),ly=cy+Rm*Math.sin(midAng);
+      const fs=size<=160?7:size<=200?8:9;
+      labels+=`<text x="${lx.toFixed(1)}" y="${(ly-fs/2).toFixed(1)}" text-anchor="middle" font-size="${fs}" font-weight="700" fill="#fff" style="text-shadow:0 1px 2px rgba(0,0,0,.4)">${seg.name}</text>`;
+      labels+=`<text x="${lx.toFixed(1)}" y="${(ly+fs*1.2).toFixed(1)}" text-anchor="middle" font-size="${fs}" fill="rgba(255,255,255,.9)">${pct.toFixed(0)}%</text>`;
+    }
+    ang+=sl;
+  });
+  // 중앙: 총 항목수
+  return`<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="display:block;margin:0 auto;flex-shrink:0">${paths}${labels}<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="${size<=160?9:10}" font-weight="700" fill="#1a1a18">${segs.length}</text><text x="${cx}" y="${cy+10}" text-anchor="middle" font-size="${size<=160?8:9}" fill="var(--hint)">항목</text></svg>`;
 }
 function makeBarSVG(data,height){
-  const W=340,H=height,pL=36,pB=22,pT=20,pR=8,cW=W-pL-pR,cH=H-pB-pT;
-  const maxV=Math.max(...data.map(d=>d.v))||1;
-  const scale=maxV*1.15;
-  const bw=Math.floor(cW/data.length*.58),gap=(cW-bw*data.length)/(data.length+1);
+  const W=340,H=height,pL=40,pB=24,pT=22,pR=8,cW=W-pL-pR,cH=H-pB-pT;
+  const n=data.length||1;
+  // 막대 너비와 간격: 전체 영역을 n등분하여 70% 막대, 30% 간격
+  const slotW=cW/n;
+  const bw=Math.max(8,Math.floor(slotW*0.65));
+  const pad=Math.floor((slotW-bw)/2);
+  const maxV=Math.max(...data.map(d=>d.v),1);
+  const scale=maxV*1.18;
   let bars='',lbls='',amts='',grid='';
-  // Y축: 억 단위만 (0, 1억, 2억 ... )
   const tickAmt=v=>{
     if(v===0)return'0';
-    const uk=v/1e8;
-    if(uk>=1)return(uk%1===0?uk.toFixed(0):uk.toFixed(1))+'억';
-    if(uk>=0.1)return uk.toFixed(1)+'억';
-    return(v/1e6).toFixed(0)>0?(v/1e6).toFixed(0)/100+'억':'0';
+    if(v>=1e8)return(v/1e8).toFixed(1)+'억';
+    if(v>=1e7)return(v/1e7).toFixed(1)+'천만';
+    if(v>=1e6)return(v/1e6).toFixed(0)+'백만';
+    if(v>=1e4)return(v/1e4).toFixed(0)+'만';
+    return v.toLocaleString();
   };
   for(let i=0;i<=3;i++){
     const y=pT+cH-cH*i/3,v=scale*i/3;
@@ -1766,20 +1947,17 @@ function makeBarSVG(data,height){
     if(i>0)grid+=`<text x="${pL-4}" y="${(y+3).toFixed(1)}" text-anchor="end" font-size="8" fill="#a3a29c">${tickAmt(v)}</text>`;
   }
   data.forEach((d,i)=>{
-    const x=pL+gap+(bw+gap)*i;
-    const bh=Math.max(d.v>0?4:1,(d.v/scale)*cH);
+    const x=pL+i*slotW+pad;
+    const bh=d.v>0?Math.max(4,(d.v/scale)*cH):1;
     const y=pT+cH-bh;
-    // 막대
-    bars+=`<rect x="${x}" y="${y.toFixed(1)}" width="${bw}" height="${bh.toFixed(1)}" fill="${d.v>0?d.color:'#e8e6df'}" rx="3" opacity="${d.v>0?0.9:0.3}"/>`;
-    // 막대 상단 금액 (0이 아닐 때만)
+    bars+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw}" height="${bh.toFixed(1)}" fill="${d.v>0?d.color:'#e8e6df'}" rx="3" opacity="${d.v>0?0.9:0.3}"/>`;
     if(d.v>0){
-      const vLbl=d.v>=1e8?(d.v/1e8).toFixed(1)+'억':d.v>=1e6?(d.v/1e8).toFixed(2)+'억':d.v>0?fmtW(d.v):'';
+      const vLbl=fmtW(d.v).replace('원','');// 단위 자동
       amts+=`<text x="${(x+bw/2).toFixed(1)}" y="${(y-3).toFixed(1)}" text-anchor="middle" font-size="8" fill="${d.color}" font-weight="700">${vLbl}</text>`;
     }
-    // 카테고리명
-    lbls+=`<text x="${(x+bw/2).toFixed(1)}" y="${H-5}" text-anchor="middle" font-size="8" fill="#73726c">${d.name}</text>`;
+    lbls+=`<text x="${(x+bw/2).toFixed(1)}" y="${H-6}" text-anchor="middle" font-size="8" fill="#73726c">${d.name}</text>`;
   });
-  return`<svg width="100%" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="display:block">${grid}${bars}${amts}${lbls}<line x1="${pL}" y1="${pT}" x2="${pL}" y2="${pT+cH}" stroke="#e8e6df"/><line x1="${pL}" y1="${(pT+cH).toFixed(1)}" x2="${W-pR}" y2="${(pT+cH).toFixed(1)}" stroke="#e8e6df"/></svg>`;
+  return`<svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMinYMin meet" style="display:block;min-height:${H}px">${grid}${bars}${amts}${lbls}<line x1="${pL}" y1="${pT}" x2="${pL}" y2="${pT+cH}" stroke="#e8e6df"/><line x1="${pL}" y1="${(pT+cH).toFixed(1)}" x2="${W-pR}" y2="${(pT+cH).toFixed(1)}" stroke="#e8e6df"/></svg>`;
 }
 function makeLineSVG(pts,marks,height){
   const W=500,H=height,pL=36,pB=24,pT=8,pR=12,cW=W-pL-pR,cH=H-pB-pT;
@@ -1792,11 +1970,146 @@ function makeLineSVG(pts,marks,height){
   const path=pts.map((p,i)=>`${i===0?'M':'L'}${toX(p.x).toFixed(1)},${toY(p.y).toFixed(1)}`).join(' ');
   const fill=path+` L${toX(100)},${toY(minY)} L${toX(70)},${toY(minY)} Z`;
   let dots='';marks.forEach(m=>{const y=toY(compute(m.x).mg);dots+=`<circle cx="${toX(m.x).toFixed(1)}" cy="${y.toFixed(1)}" r="${m.r||5}" fill="${m.color}" stroke="#fff" stroke-width="2"/>`;});
-  return`<svg width="100%" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="display:block">${grid}${zero}<path d="${fill}" fill="#185FA5" opacity=".06"/><path d="${path}" fill="none" stroke="#185FA5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>${dots}${xLbls}<line x1="${pL}" y1="${pT}" x2="${pL}" y2="${pT+cH}" stroke="#e8e6df"/><line x1="${pL}" y1="${pT+cH}" x2="${W-pR}" y2="${pT+cH}" stroke="#e8e6df"/><text x="${W/2}" y="${H-1}" text-anchor="middle" font-size="9" fill="#a3a29c">투찰율 (%)</text></svg>`;
+  return`<svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMinYMin meet" style="display:block;min-height:${H}px">${grid}${zero}<path d="${fill}" fill="#185FA5" opacity=".06"/><path d="${path}" fill="none" stroke="#185FA5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>${dots}${xLbls}<line x1="${pL}" y1="${pT}" x2="${pL}" y2="${pT+cH}" stroke="#e8e6df"/><line x1="${pL}" y1="${pT+cH}" x2="${W-pR}" y2="${pT+cH}" stroke="#e8e6df"/><text x="${W/2}" y="${H-1}" text-anchor="middle" font-size="9" fill="#a3a29c">투찰율 (%)</text></svg>`;
 }
 
 /* ============================================================
-   EXPORT
+   EXPORT — 엑셀 / 보고서(Word) / PPT 노트
+============================================================ */
+function buildExcel(){
+  const r=compute(S.bid),mms=getMMs();
+  const scr={minBid:compute(S.minBid||70),cur:r};
+  const Q=v=>'"'+String(v).replace(/"/g,'""')+'"';
+  const N=v=>typeof v==='number'?v.toLocaleString('ko-KR'):'';
+  const P=v=>typeof v==='number'?v.toFixed(2)+'%':'';
+  const rows=[];
+  rows.push(["d'strict B2G Simulator Vol.1.2","","생성:",new Date().toLocaleString('ko-KR')]);
+  rows.push(["프로젝트명",S.projectName||"(미입력)"]);
+  rows.push([]);
+  rows.push(["[투찰 정보]"]);
+  rows.push(["기초금액(원)",N(S.base),"투찰율",P(S.bid)]);
+  rows.push(["낙찰금액(원)",N(r.ct),"공급가액(원)",N(r.rv)]);
+  rows.push([]);
+  rows.push(["[손익 계산서]","금액(원)","비율"]);
+  rows.push(["공급가액(매출)",N(r.rv),"100%"]);
+  rows.push(["(-) 인건비",N(r.lc),r.rv>0?((r.lc/r.rv)*100).toFixed(1)+'%':'-']);
+  rows.push(["(-) 외주비 공급가액",N(r.os),r.rv>0?((r.os/r.rv)*100).toFixed(1)+'%':'-']);
+  rows.push(["(-) 서버/기타",N(r.svc),r.rv>0?((r.svc/r.rv)*100).toFixed(1)+'%':'-']);
+  rows.push(["공헌이익",N(r.cn),r.rv>0?((r.cn/r.rv)*100).toFixed(1)+'%':'-']);
+  rows.push(["(-) 간접비("+S.indr+"%)",N(r.ic),S.indr+'%']);
+  rows.push(["영업이익",N(r.op),P(r.mg)]);
+  rows.push([]);
+  rows.push(["[인건비 상세]","등급","인원","MM","M/M단가(원)","소계(원)"]);
+  S.labor.forEach(lr=>{
+    const g=mms[lr.grade];
+    rows.push(["",GD[lr.grade].label,lr.count,lr.mm,N(g.mm),N(fl(g.mm*lr.count*lr.mm))]);
+  });
+  rows.push([]);
+  rows.push(["[외주비 상세]","카테고리","항목명","입력금액(원)","VAT","공급가액(원)"]);
+  S.outs.forEach(o=>{
+    const v=parseFloat(o.amount)||0,sup=o.vatIncl?fl(v/1.1):v;
+    rows.push(["",OCATS.find(c=>c.id===o.catId)?.label||o.catId,o.name,N(v),o.vatIncl?'포함':'별도',N(sup)]);
+  });
+  rows.push([]);
+  rows.push(["[시나리오 비교]","최소 입찰율("+P(S.minBid||70)+")","현재 투찰율("+P(S.bid)+")"]);
+  [["투찰금액","ct"],["공급가액","rv"],["인건비","lc"],["외주비","os"],["공헌이익","cn"],["영업이익","op"],["이익률","mg"]].forEach(([l,k])=>{
+    rows.push([l,...["minBid","cur"].map(sc=>k==="mg"?P(scr[sc][k]):N(fl(scr[sc][k])))]);
+  });
+  rows.push([]);
+  rows.push(["d'strict 2026년 노임단가 기준 · 원 단위 미만 절삭 · d'strict B2G Simulator"]);
+  return '﻿'+rows.map(r=>r.map(Q).join(',')).join('\r\n');
+}
+
+function buildWordReport(){
+  const r=compute(S.bid),mms=getMMs();
+  const sep='='.repeat(50);
+  const lines=[
+    sep,
+    "  d'strict B2G Simulator Vol.1.2",
+    "  공공사업 예산 분석 보고서",
+    sep,
+    "프로젝트명: "+(S.projectName||"(미입력)"),
+    "작성일시:   "+new Date().toLocaleString('ko-KR',{hour12:false}),
+    "기초금액:   "+fmtF(S.base),
+    "투찰율:     "+S.bid.toFixed(2)+'%',
+    "",
+    "━━━ 손익 계산서 ━━━",
+    "",
+    "  공급가액 (매출)        "+fmtF(r.rv).padStart(18),
+    "  (-) 인건비             "+('-'+fmtF(r.lc)).padStart(18),
+    "  (-) 외주비 공급가액    "+('-'+fmtF(r.os)).padStart(18),
+    "  (-) 서버/기타          "+('-'+fmtF(r.svc)).padStart(18),
+    "  "+'-'.repeat(40),
+    "  공헌이익               "+fmtF(r.cn).padStart(18),
+    "  (-) 간접비 ("+S.indr+"%)       "+('-'+fmtF(r.ic)).padStart(18),
+    "  "+'-'.repeat(40),
+    "  ★ 영업이익              "+fmtF(r.op).padStart(18),
+    "  ★ 영업이익률            "+(r.mg.toFixed(2)+'%').padStart(18),
+    "",
+    "━━━ 투입 인력 ━━━",
+    "",
+    ...S.labor.map(lr=>{
+      const g=mms[lr.grade];
+      return"  "+GD[lr.grade].label+" "+lr.count+"명 × "+lr.mm+"MM × "+fmtF(g.mm)+" = "+fmtF(fl(g.mm*lr.count*lr.mm));
+    }),
+    "  인건비 합계: "+fmtF(r.lc),
+    "",
+    "━━━ 외주비 상세 ━━━",
+    "",
+    ...S.outs.map(o=>{
+      const v=parseFloat(o.amount)||0,sup=o.vatIncl?fl(v/1.1):v;
+      const cat=OCATS.find(c=>c.id===o.catId)?.label||o.catId;
+      return"  ["+cat+"] "+(o.name||"(항목명 없음)")+" → 공급가액 "+fmtF(sup);
+    }),
+    ...(S.memo?["","━━━ 특이사항/메모 ━━━","",S.memo]:[]),
+    "",
+    sep,
+    "d'strict 2026년 노임단가 기준 · 원 단위 미만 절삭",
+    "d'strict B2G Simulator Vol.1.2",
+    sep,
+  ];
+  return '﻿'+lines.join('\r\n');
+}
+
+function buildPPTNotes(){
+  const r=compute(S.bid),mms=getMMs();
+  const lines=[
+    "━━━ PPT 발표 노트 — d'strict B2G Simulator Vol.1.2 ━━━",
+    "",
+    "【슬라이드 1: 프로젝트 개요】",
+    "- 프로젝트명: "+(S.projectName||"(미입력)"),
+    "- 기초금액: "+fmtW(S.base)+" (VAT 포함)",
+    "- 투찰율: "+S.bid.toFixed(2)+"%",
+    "- 낙찰예정금액: "+fmtW(r.ct),
+    "",
+    "【슬라이드 2: 손익 분석 핵심 요약】",
+    "- 공급가액(매출): "+fmtW(r.rv),
+    "- 총 변동비: "+fmtW(r.dt)+" (공급가액의 "+(r.rv>0?((r.dt/r.rv)*100).toFixed(1):'0')+"% 차지)",
+    "- 공헌이익: "+fmtW(r.cn),
+    "- 영업이익: "+fmtW(r.op),
+    "- ★ 영업이익률: "+r.mg.toFixed(2)+"%  →  "+( r.mg>=10?"목표 달성 (10% 이상)":r.mg>=0?"마진 주의":"적자 구조"),
+    "",
+    "【슬라이드 3: 비용 구조】",
+    "- 인건비: "+fmtW(r.lc)+" ("+( r.rv>0?((r.lc/r.rv)*100).toFixed(1):'0')+"% / 공급가액 대비)",
+    "- 외주비: "+fmtW(r.os)+" ("+( r.rv>0?((r.os/r.rv)*100).toFixed(1):'0')+"% / 공급가액 대비)",
+    "- 간접비: "+fmtW(r.ic)+" ("+S.indr+"% 적용)",
+    "",
+    "【슬라이드 4: 투입 인력】",
+    ...S.labor.map(lr=>{const g=mms[lr.grade];return"- "+GD[lr.grade].label+" "+lr.count+"명 × "+lr.mm+"MM = "+fmtW(fl(g.mm*lr.count*lr.mm));}),
+    "  → 인건비 합계: "+fmtW(r.lc),
+    "",
+    "【슬라이드 5: 시나리오 비교】",
+    "- 최소 입찰율 "+(S.minBid||70).toFixed(2)+"%: 영업이익 "+fmtW(compute(S.minBid||70).op)+" / 이익률 "+compute(S.minBid||70).mg.toFixed(2)+"%",
+    "- 현재 투찰율 "+S.bid.toFixed(2)+"%: 영업이익 "+fmtW(r.op)+" / 이익률 "+r.mg.toFixed(2)+"%",
+    "",
+    ...(S.memo?["【슬라이드 6: 특이사항】",S.memo,""]:[]),
+    "━━━ d'strict 2026년 노임단가 기준 · d'strict B2G Simulator Vol.1.2 ━━━",
+  ];
+  return '﻿'+lines.join('\r\n');
+}
+
+/* ============================================================
+   EXPORT (기존 buildCSV/JSON/TXT 유지)
 ============================================================ */
 function buildCSV(){
   const r=compute(S.bid),mms=getMMs();
@@ -1809,7 +2122,7 @@ function buildCSV(){
   rows.push(['',fmtF(S.base),S.bid.toFixed(2)+'%',S.oh+'%',S.tr+'%',S.indr+'%']);
   rows.push([]);
   rows.push(['[손익 계산서]','금액(원)']);
-  [['낙찰금액(VAT포함)',r.ct],['공급가액(매출)',r.rv],['(-) 인건비',-r.lc],['(-) 외주비',-r.os],['(-) 서버/기타',-r.svc],['공헌이익',r.cn],[`(-) 간접비(${S.indr}%)`,-r.ic],['영업이익',r.op]].forEach(([l,v])=>rows.push(['',l,fl(v)]));
+  [['투찰금액(VAT포함)',r.ct],['공급가액(매출)',r.rv],['(-) 인건비',-r.lc],['(-) 외주비',-r.os],['(-) 서버/기타',-r.svc],['공헌이익',r.cn],[`(-) 간접비(${S.indr}%)`,-r.ic],['영업이익',r.op]].forEach(([l,v])=>rows.push(['',l,fl(v)]));
   rows.push(['','영업이익률',r.mg.toFixed(2)+'%']);
   rows.push([]);
   rows.push(['[인건비 상세]','등급','인원','MM','M/M단가','소계']);
@@ -1832,7 +2145,7 @@ function buildTXT(){
   const r=compute(S.bid),mms=getMMs(),scr={worst:compute(S.sc.worst),avg:compute(S.sc.avg),best:compute(S.sc.best)};
   const sep='━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
   return[`2026 B2G 전략 예산 시뮬레이터 — 분석 보고서`,`생성: ${new Date().toLocaleString('ko-KR')}`,sep,
-    `기초금액: ${fmtF(S.base)}  투찰율: ${S.bid.toFixed(2)}%`,`공급가액: ${fmtF(r.rv)}  (낙찰금액 ${fmtF(r.ct)} ÷ 1.1)`,sep,
+    `기초금액: ${fmtF(S.base)}  투찰율: ${S.bid.toFixed(2)}%`,`공급가액: ${fmtF(r.rv)}  (투찰금액 ${fmtF(r.ct)} ÷ 1.1)`,sep,
     '[손익 계산서]',`공급가액       ${fmtF(r.rv)}`,`(-) 인건비     ${fmtF(r.lc)}`,`(-) 외주비     ${fmtF(r.os)}`,`(-) 서버/기타  ${fmtF(r.svc)}`,
     '───────────────────',`공헌이익       ${fmtF(r.cn)}`,`(-) 간접비     ${fmtF(r.ic)}`,`영업이익       ${fmtF(r.op)}`,`영업이익률     ${r.mg.toFixed(2)}%`,sep,
     '[인건비 상세]',...S.labor.map(lr=>{const g=mms[lr.grade];return`  ${GD[lr.grade].label} ${lr.count}명 × ${lr.mm}MM = ${fmtF(fl(g.mm*lr.count*lr.mm))}`;}),sep,
@@ -1993,19 +2306,28 @@ function getProjects(){return lsGet('b2g5_projects',[]);}
 function saveProjects(arr){lsSet('b2g5_projects',arr);}
 
 function saveCurrentProject(){
-  if(!BASELINE){alert('먼저 변경 적용을 눌러 결과를 확정해주세요.');return;}
+  if(!BASELINE){
+    if(!confirm('변경 적용이 되지 않은 상태입니다.\n현재 입력값으로 저장하시겠습니까?'))return;
+    // 임시 계산으로 저장
+    autoSetScenarios();
+    BASELINE=snapshotResult();
+    const btn=document.getElementById('btn-confirm');
+    const txt=document.getElementById('btn-confirm-txt');
+    if(btn){btn.className='confirmed';if(txt)txt.textContent='적용 완료';}
+    setTimeout(()=>{if(btn&&!IS_DIRTY){btn.className='idle';if(txt)txt.textContent='변경 적용';}},2200);
+  }
   const name=S.projectName||('프로젝트 '+(getProjects().length+1));
   const r=compute(S.bid);
   const proj={
     id:Date.now(),
     name:name,
-    ts:new Date().toLocaleString('ko-KR',{hour12:false}),
+    ts:new Date().toLocaleString('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).replace(/\. /g,'.').replace('  ',' '),
     state:JSON.parse(JSON.stringify(S)),
     result:{ct:r.ct,rv:r.rv,lc:r.lc,os:r.os,svc:r.svc,dt:r.dt,cn:r.cn,ic:r.ic,op:r.op,mg:r.mg},
     catData:OCATS.map(cat=>{
-      const t=S.outs.filter(r=>r.catId===cat.id).reduce((s,r)=>{const v=parseFloat(r.amount)||0;return s+(r.vatIncl?fl(v/1.1):v);},0);
+      const t=S.outs.filter(r=>r.catId===cat.id).reduce((s,r)=>{const v=Math.max(0,parseFloat(r.amount)||0);return s+(r.vatIncl?fl(v/1.1):v);},0);
       return{id:cat.id,name:cat.label,v:t,color:cat.color};
-    }),
+    }).filter(d=>d.v>0).concat(S.svc>0?[{id:'svc',name:'서버/기타(고정)',v:S.svc,color:'#73726c'}]:[]),
   };
   const projects=getProjects();
   // 같은 이름이면 덮어쓰기 여부 확인
@@ -2023,11 +2345,96 @@ function saveCurrentProject(){
   if(btn){const orig=btn.innerHTML;btn.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 저장 완료';btn.style.background='var(--kpi-green)';btn.style.color='#fff';btn.style.borderColor='var(--kpi-green)';setTimeout(()=>{btn.innerHTML=orig;btn.style='';},2000);}
 }
 
+function getTrash(){return lsGet('b2g5_trash',[]);}
+function saveTrash(arr){lsSet('b2g5_trash',arr);}
+
 function deleteProject(id){
-  if(!confirm('이 프로젝트를 삭제하시겠습니까?'))return;
+  const proj=getProjects().find(p=>p.id===id);if(!proj)return;
+  // 휴지통으로 이동
+  const trash=getTrash();
+  trash.unshift({...proj, deletedAt:Date.now()});
+  saveTrash(trash);
   saveProjects(getProjects().filter(p=>p.id!==id));
+  // 모달형 목록 갱신
+  if(document.getElementById('project-list-wrap'))renderProjectList();
+  // 페이지형 목록 갱신
+  if(document.getElementById('pp-project-list'))renderPPList();
+  // 비교 탭 갱신
+  if(document.getElementById('project-compare-wrap'))renderProjectCompare();
+  if(document.getElementById('pp-compare-wrap'))renderPPCompare();
+  // 휴지통 탭이 열려있으면 갱신
+  if(document.getElementById('pp-trash-wrap')&&document.getElementById('pp-trash').style.display!=='none')renderTrashList();
+}
+
+function restoreProject(id){
+  const item=getTrash().find(p=>p.id===id);if(!item)return;
+  const projects=getProjects();
+  const {deletedAt,...proj}=item;
+  projects.unshift(proj);
+  if(projects.length>20)projects.pop();
+  saveProjects(projects);
+  saveTrash(getTrash().filter(p=>p.id!==id));
+  renderTrashList();
   renderProjectList();
-  renderProjectCompare();
+  // 페이지형 목록도 갱신 후 목록 탭으로 이동
+  if(document.getElementById('pp-project-list')){
+    renderPPList();
+    switchPPTab('list');
+  }
+}
+
+function deletePermanent(id){
+  if(!confirm('영구 삭제하시겠습니까? 복구할 수 없습니다.'))return;
+  saveTrash(getTrash().filter(p=>p.id!==id));
+  renderTrashList();
+}
+
+function emptyTrash(){
+  if(!confirm('휴지통을 완전히 비우시겠습니까?'))return;
+  saveTrash([]);
+  renderTrashList();
+}
+
+function autoCleanTrash(){
+  const now=Date.now();
+  const FIFTEEN_DAYS=15*24*60*60*1000;
+  const cleaned=getTrash().filter(p=>(now-p.deletedAt)<FIFTEEN_DAYS);
+  if(cleaned.length!==getTrash().length)saveTrash(cleaned);
+}
+
+function renderTrashList(){
+  autoCleanTrash();
+  const el=document.getElementById('pp-trash-wrap');if(!el)return;
+  const trash=getTrash();
+  if(!trash.length){
+    el.innerHTML='<div style="text-align:center;padding:40px;color:var(--hint)"><div style="font-size:32px;margin-bottom:10px">🗑️</div><div style="font-size:12px;color:var(--muted)">휴지통이 비어 있습니다</div><div style="font-size:11px;color:var(--hint);margin-top:4px">삭제된 프로젝트가 15일 후 자동 삭제됩니다</div></div>';
+    return;
+  }
+  const now=Date.now();
+  const FIFTEEN_DAYS=15*24*60*60*1000;
+  el.innerHTML=`
+    <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
+      <button onclick="emptyTrash()" style="padding:7px 14px;font-size:11px;font-weight:600;border:1px solid var(--red);border-radius:7px;background:var(--red-bg);color:var(--red);cursor:pointer;font-family:var(--font)">
+        🗑️ 휴지통 비우기
+      </button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      ${trash.map(p=>{
+        const daysLeft=Math.max(0,Math.ceil((FIFTEEN_DAYS-(now-p.deletedAt))/86400000));
+        const mgC=p.result.mg>=10?'var(--kpi-green)':p.result.mg>=0?'var(--kpi-yellow)':'var(--kpi-red)';
+        return`<div style="border:1px solid var(--border);border-radius:10px;background:var(--card);padding:12px 14px;display:flex;align-items:center;gap:12px;opacity:0.8">
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px">${p.name}</div>
+            <div style="font-size:10px;color:var(--hint)">삭제일: ${new Date(p.deletedAt).toLocaleDateString('ko-KR')} · 기초금액 ${fmtW(p.state.base)} · <span style="color:${daysLeft<=3?'var(--red)':'var(--amber)'};font-weight:600">${daysLeft}일 후 영구 삭제</span></div>
+          </div>
+          <span style="padding:3px 8px;border-radius:5px;font-size:11px;font-weight:700;background:var(--bg);color:${mgC};white-space:nowrap">${p.result.mg.toFixed(1)}%</span>
+          <div style="display:flex;gap:6px;flex-shrink:0">
+            <button onclick="restoreProject(${p.id})" style="padding:5px 10px;font-size:11px;font-weight:600;border:1px solid var(--green);border-radius:6px;background:var(--green-bg);color:var(--green);cursor:pointer;font-family:var(--font)">복원</button>
+            <button onclick="deletePermanent(${p.id})" style="padding:5px 10px;font-size:11px;font-weight:600;border:1px solid var(--red);border-radius:6px;background:var(--red-bg);color:var(--red);cursor:pointer;font-family:var(--font)">영구삭제</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
 }
 
 function loadProject(id){
@@ -2035,7 +2442,7 @@ function loadProject(id){
   if(!confirm(`"${proj.name}" 프로젝트를 불러오시겠습니까?
 현재 입력값이 변경됩니다.`))return;
   Object.assign(S,JSON.parse(JSON.stringify(proj.state)));
-  saveAll();
+  normalizeOutsData();  // 불러온 프로젝트도 id 재발급
   buildLeft();buildRight();
   autoSetScenarios();
   BASELINE=proj.result;
@@ -2053,7 +2460,7 @@ function switchProjTab(tab){
   });
   document.getElementById('ptab-list').style.display=tab==='list'?'block':'none';
   document.getElementById('ptab-compare').style.display=tab==='compare'?'block':'none';
-  if(tab==='compare')renderProjectCompare();
+  if(tab==='compare')renderPPCompare();
 }
 
 function renderProjectList(){
@@ -2072,7 +2479,7 @@ function renderProjectList(){
       ${projects.map(p=>{
         const mgC=p.result.mg>=10?'var(--kpi-green)':p.result.mg>=0?'var(--kpi-yellow)':'var(--kpi-red)';
         const mgBg=p.result.mg>=10?'var(--green-bg)':p.result.mg>=0?'var(--amber-bg)':'var(--red-bg)';
-        const catBars=p.catData.filter(c=>c.v>0).map(c=>`
+        const catBars=(p.catData||[]).filter(c=>c.v>0).map(c=>`
           <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted)">
             <span style="width:7px;height:7px;border-radius:1px;background:${c.color};flex-shrink:0;display:inline-block"></span>
             <span style="flex:1">${c.name}</span>
@@ -2082,7 +2489,7 @@ function renderProjectList(){
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px">
             <div>
               <div style="font-size:13px;font-weight:700;color:var(--text);letter-spacing:-0.3px;margin-bottom:2px">${p.name}</div>
-              <div style="font-size:10px;color:var(--hint)">${p.ts} · 기초 ${fmtW(p.state.base)} · 투찰 ${p.state.bid.toFixed(2)}%</div>
+              <div style="font-size:10px;color:var(--hint)"><span style="color:var(--purple);font-weight:600">${p.ts}</span> · 기초 ${fmtW(p.state.base)} · 투찰 ${p.state.bid.toFixed(2)}%</div>
             </div>
             <span style="padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${mgBg};color:${mgC};flex-shrink:0">${p.result.mg.toFixed(2)}%</span>
           </div>
@@ -2103,7 +2510,7 @@ function renderProjectList(){
           ${catBars?`<div style="display:flex;flex-direction:column;gap:4px;margin-bottom:10px;padding:8px 10px;background:var(--bg);border-radius:7px">${catBars}</div>`:''}
           <div style="display:flex;gap:6px">
             <button onclick="loadProject(${p.id})" style="flex:1;padding:6px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--muted);cursor:pointer;font-family:var(--font);transition:all .12s" onmouseover="this.style.background='var(--blue-bg)';this.style.color='var(--blue)'" onmouseout="this.style.background='var(--card)';this.style.color='var(--muted)'">불러오기</button>
-            <button onclick="deleteProject(${p.id})" style="padding:6px 12px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--red);cursor:pointer;font-family:var(--font);transition:all .12s" onmouseover="this.style.background='var(--red-bg)'" onmouseout="this.style.background='var(--card)'">삭제</button>
+            <button onclick="deleteProject(${p.id})" title="휴지통으로 이동" style="padding:6px 10px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--muted);cursor:pointer;font-family:var(--font);transition:all .12s;display:flex;align-items:center;gap:4px" onmouseover="this.style.background='var(--red-bg)';this.style.color='var(--red)';this.style.borderColor='var(--red)'" onmouseout="this.style.background='var(--card)';this.style.color='var(--muted)';this.style.borderColor='var(--border)'"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>휴지통</button>
           </div>
         </div>`;
       }).join('')}
@@ -2200,7 +2607,8 @@ function switchPage(page){
   });
   // 페이지별 초기화
   if(page==='home') renderHomePage();
-  if(page==='projects'){ renderPPList(); switchPPTab('list'); }
+  if(page==='projects'){ autoCleanTrash(); renderPPList(); switchPPTab('list'); }
+  if(page==='home'){ renderHomeRecent(); }
   if(page==='simulator'){
     const cb2=document.getElementById('confirm-bar');
     if(cb2)cb2.style.display='block';
@@ -2238,9 +2646,13 @@ function switchPPTab(tab){
     b.style.color=on?'var(--purple)':'var(--muted)';
     b.style.fontWeight=on?'600':'500';
   });
-  document.getElementById('pp-list').style.display=tab==='list'?'block':'none';
-  document.getElementById('pp-compare').style.display=tab==='compare'?'block':'none';
+  ['list','compare','trash'].forEach(t=>{
+    const el=document.getElementById('pp-'+t);
+    if(el)el.style.display=t===tab?'block':'none';
+  });
+  if(tab==='list') renderPPList();
   if(tab==='compare') renderPPCompare();
+  if(tab==='trash'){autoCleanTrash();renderTrashList();}
 }
 
 /* 프로젝트 목록 (페이지형) */
@@ -2260,7 +2672,7 @@ function renderPPList(){
       ${projects.map(p=>{
         const mgC=p.result.mg>=10?'var(--kpi-green)':p.result.mg>=0?'var(--kpi-yellow)':'var(--kpi-red)';
         const mgBg=p.result.mg>=10?'var(--green-bg)':p.result.mg>=0?'var(--amber-bg)':'var(--red-bg)';
-        const catBars=p.catData.filter(c=>c.v>0).map(c=>`
+        const catBars=(p.catData||[]).filter(c=>c.v>0).map(c=>`
           <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted)">
             <span style="width:7px;height:7px;border-radius:1px;background:${c.color};flex-shrink:0;display:inline-block"></span>
             <span style="flex:1">${c.name}</span>
@@ -2292,7 +2704,7 @@ function renderPPList(){
           <div style="display:flex;gap:6px">
             <button onclick="loadProject(${p.id});switchPage('simulator')" style="flex:1;padding:7px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--blue);cursor:pointer;font-family:var(--font)" onmouseover="this.style.background='var(--blue-bg)'" onmouseout="this.style.background='var(--card)'">불러오기</button>
             <button onclick="exportOneProject(${p.id})" style="padding:7px 10px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--green);cursor:pointer;font-family:var(--font)" onmouseover="this.style.background='var(--green-bg)'" onmouseout="this.style.background='var(--card)'">추출</button>
-            <button onclick="deletePPProject(${p.id})" style="padding:7px 10px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--red);cursor:pointer;font-family:var(--font)" onmouseover="this.style.background='var(--red-bg)'" onmouseout="this.style.background='var(--card)'">삭제</button>
+            <button onclick="deleteProject(${p.id})" title="휴지통으로 이동" style="padding:7px 10px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--muted);cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:4px;transition:all .15s" onmouseover="this.style.background='var(--red-bg)';this.style.color='var(--red)';this.style.borderColor='var(--red)'" onmouseout="this.style.background='var(--card)';this.style.color='var(--muted)';this.style.borderColor='var(--border)'"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>휴지통</button>
           </div>
         </div>`;
       }).join('')}
@@ -2300,10 +2712,9 @@ function renderPPList(){
 }
 
 function deletePPProject(id){
-  if(!confirm('이 프로젝트를 삭제하시겠습니까?'))return;
-  saveProjects(getProjects().filter(p=>p.id!==id));
+  // deleteProject로 위임 (휴지통 이동)
+  deleteProject(id);
   renderPPList();
-  renderPPCompare();
 }
 
 /* 단일 프로젝트 CSV 추출 */
@@ -2330,6 +2741,11 @@ let COMPARE_SELECTED = [];
 function renderPPCompare(){
   const el=document.getElementById('pp-compare-wrap'); if(!el) return;
   const projects=getProjects();
+  // 프로젝트별 고유 컬러 — 함수 전체에서 사용
+  const PCOLS=['#185FA5','#534AB7','#0F6E56','#993C1D','#854F0B','#A32D2D'];
+  const PBGS=['#E6F1FB','#EEEDFE','#E1F5EE','#FAECE7','#FAEEDA','#FCEBEB'];
+  const pCol=i=>PCOLS[i%PCOLS.length];
+  const pBg=i=>PBGS[i%PBGS.length];
   if(projects.length<2){
     el.innerHTML='<div style="text-align:center;padding:40px;color:var(--hint);font-size:13px">비교하려면 저장된 프로젝트가 2개 이상 필요합니다.</div>';
     return;
@@ -2375,7 +2791,7 @@ function renderPPCompare(){
         <div style="flex:1;min-width:60px;max-width:140px;display:flex;flex-direction:column;align-items:center;gap:4px">
           <span style="font-size:11px;font-weight:700;color:${mgC(p)}">${p.result.mg.toFixed(1)}%</span>
           <div style="width:100%;background:var(--bg);border-radius:6px 6px 0 0;height:80px;display:flex;align-items:flex-end">
-            <div style="width:100%;border-radius:6px 6px 0 0;background:${mgC(p)};height:${Math.max(8,(Math.abs(p.result.mg)/maxMg)*80).toFixed(0)}px;opacity:0.85"></div>
+            <div style="width:100%;border-radius:6px 6px 0 0;background:${PCOLS[selected.indexOf(p)%PCOLS.length]};height:${Math.max(8,(Math.abs(p.result.mg)/maxMg)*80).toFixed(0)}px;opacity:0.85"></div>
           </div>
           <div style="font-size:9px;color:var(--hint);text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%">${p.name}</div>
         </div>`).join('')}
@@ -2394,23 +2810,30 @@ function renderPPCompare(){
     {label:'이익률',key:'mg',fn:p=>p.result.mg,fmt:v=>v.toFixed(2)+'%',bold:true,color:true},
   ];
 
+  // 컬럼 너비: 항목 고정 100px, 나머지 균등
+  const colW=Math.floor(100/selected.length);
   const tbl=`<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px">
     <div style="overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse;min-width:400px">
-        <thead><tr style="background:var(--bg)">
-          <th style="padding:10px 12px;font-size:10px;color:var(--muted);font-weight:700;border-bottom:1px solid var(--border);text-align:left;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap">항목</th>
-          ${selected.map(p=>`<th style="padding:10px 12px;font-size:11px;font-weight:700;border-bottom:1px solid var(--border);text-align:center;color:${mgC(p)}"><div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:120px">${p.name}</div><div style="font-size:9px;color:var(--hint);font-weight:400">${p.ts.slice(0,10)}</div></th>`).join('')}
-        </tr></thead>
+      <table style="width:100%;border-collapse:collapse;min-width:400px;table-layout:fixed">
+        <colgroup><col style="width:110px">${selected.map(()=>`<col style="width:${colW}%">`).join('')}</colgroup>
+        <thead>
+          <tr>
+            <th style="padding:10px 12px;font-size:10px;color:var(--muted);font-weight:700;border-bottom:2px solid var(--border);text-align:left;letter-spacing:0.5px;text-transform:uppercase;background:var(--bg)">항목</th>
+            ${selected.map((p,pi)=>`<th style="padding:10px 12px;font-size:11px;font-weight:700;border-bottom:3px solid ${pCol(pi)};border-left:none;text-align:center;background:${pBg(pi)};color:${pCol(pi)}"><div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</div><div style="font-size:9px;font-weight:500;opacity:.7;margin-top:2px">${p.ts.slice(0,10)}</div></th>`).join('')}
+          </tr>
+        </thead>
         <tbody>${metrics.map((m,ri)=>{
+          const rowBg=ri%2===0?'var(--card)':'var(--bg)';
           const vals=selected.map(p=>m.fn(p));
           const maxV=Math.max(...vals.filter(v=>typeof v==='number'&&!isNaN(v)));
-          return`<tr style="background:${ri%2===0?'var(--card)':'var(--bg)'}">
-            <td style="padding:8px 12px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;font-weight:${m.bold?600:400}">${m.label}</td>
-            ${selected.map(p=>{
+          return`<tr style="background:${rowBg}">
+            <td style="padding:8px 12px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;font-weight:${m.bold?600:400};background:${rowBg}">${m.label}</td>
+            ${selected.map((p,pi)=>{
               const v=m.fn(p);
-              const isMax=typeof v==='number'&&v===maxV&&maxV>0;
-              const col=m.color?mgC(p):m.bold?'var(--text)':'var(--muted)';
-              return`<td style="padding:8px 12px;font-size:12px;font-weight:${m.bold?700:400};color:${col};border-bottom:1px solid var(--border);text-align:center;${isMax&&!m.color?'background:var(--green-bg)':''}">${m.fmt(v)}</td>`;
+              const isMax=typeof v==='number'&&v===maxV&&vals.filter(x=>x===maxV).length<vals.length;
+              const col=m.color?mgC(p):m.bold?pCol(pi):'var(--text)';
+              // 배경색 일체 제거 — 행 교대색만 사용, 최고값은 색상+굵기로만 강조
+              return`<td style="padding:8px 12px;font-size:${isMax&&m.bold?13:12}px;font-weight:${isMax||m.bold?700:400};color:${col};border-bottom:1px solid var(--border);text-align:center;background:${rowBg}">${m.fmt(v)}</td>`;
             }).join('')}
           </tr>`;
         }).join('')}
@@ -2447,14 +2870,14 @@ function exportCompareXLSX(){
   const acct=v=>typeof v==='number'?v.toLocaleString('ko-KR'):'';
   const pct=v=>typeof v==='number'?v.toFixed(2)+'%':'';
   const rows=[];
-  rows.push(["d'strict B2G Simulator Vol.1.1 — 프로젝트 비교 분석","","","생성:",new Date().toLocaleString('ko-KR')]);
+  rows.push(["d'strict B2G Simulator Vol.1.2 — 프로젝트 비교 분석","","","생성:",new Date().toLocaleString('ko-KR')]);
   rows.push(["선택 프로젝트",...projects.map(p=>p.name)]);
   rows.push(["분석 일시",...projects.map(p=>p.ts)]);
   rows.push([]);
   rows.push(["[투찰 정보]",...projects.map(()=>"")]);
   rows.push(["기초금액 (원)",...projects.map(p=>acct(p.state.base))]);
   rows.push(["투찰율",...projects.map(p=>pct(p.state.bid))]);
-  rows.push(["낙찰금액 (원)",...projects.map(p=>acct(p.result.ct))]);
+  rows.push(["투찰금액 (원)",...projects.map(p=>acct(p.result.ct))]);
   rows.push(["공급가액 (원)",...projects.map(p=>acct(p.result.rv))]);
   rows.push([]);
   rows.push(["[손익 계산서]",...projects.map(()=>"")]);
@@ -2481,6 +2904,151 @@ function exportCompareXLSX(){
 }
 function exportCompareCSV(){exportCompareXLSX();}
 function exportCompareJSON(){exportCompareXLSX();}
+
+/* ============================================================
+   CAPTURE — Canvas API 기반 화면 스냅샷 (JPEG/PNG)
+============================================================ */
+function captureSnapshot(fmt){
+  if(!BASELINE){
+    if(!confirm('변경 적용이 되지 않은 상태입니다.\n현재 입력값으로 저장하시겠습니까?'))return;
+    // 임시 계산으로 저장
+    autoSetScenarios();
+    BASELINE=snapshotResult();
+    const btn=document.getElementById('btn-confirm');
+    const txt=document.getElementById('btn-confirm-txt');
+    if(btn){btn.className='confirmed';if(txt)txt.textContent='적용 완료';}
+    setTimeout(()=>{if(btn&&!IS_DIRTY){btn.className='idle';if(txt)txt.textContent='변경 적용';}},2200);
+  }
+  const r=compute(S.bid);
+  const mms=getMMs();
+  const W=800,H=520;
+  const cv=document.createElement('canvas');
+  cv.width=W;cv.height=H;
+  const ctx=cv.getContext('2d');
+
+  // 배경
+  ctx.fillStyle='#f6f5f0';ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#fff';
+  roundRect(ctx,20,20,W-40,H-40,12);ctx.fill();
+
+  // 헤더 바
+  ctx.fillStyle='#1a1a18';roundRect(ctx,20,20,W-40,52,{tl:12,tr:12,bl:0,br:0});ctx.fill();
+  ctx.fillStyle='#fff';ctx.font='700 15px "Pretendard Variable",Arial,sans-serif';
+  ctx.fillText("d'strict B2G Simulator Vol.1.2",40,52);
+  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='400 11px Arial';
+  ctx.fillText(S.projectName||'프로젝트',40,68);
+  ctx.fillText(new Date().toLocaleDateString('ko-KR'),W-120,52);
+
+  // KPI 5개
+  const kpis=[
+    {label:'투찰금액',value:fmtW(r.ct),sub:'투찰 '+S.bid.toFixed(2)+'%'},
+    {label:'공급가액',value:fmtW(r.rv),sub:'VAT 제외'},
+    {label:'총 변동비',value:fmtW(r.dt),sub:''},
+    {label:'영업이익',value:fmtW(r.op),sub:''},
+    {label:'이익률',value:r.mg.toFixed(2)+'%',sub:r.mg>=10?'목표 달성':r.mg>=0?'마진 주의':'적자'},
+  ];
+  const kw=140,kg=8,kx0=40,ky=88;
+  kpis.forEach((k,i)=>{
+    const x=kx0+i*(kw+kg);
+    const mgOk=r.mg>=10;
+    ctx.fillStyle=i>=3?(mgOk?'#EAF3DE':r.mg>=0?'#FAEEDA':'#FCEBEB'):'#f6f5f0';
+    roundRect(ctx,x,ky,kw,72,8);ctx.fill();
+    ctx.strokeStyle=i>=3?(mgOk?'#c0dd97':r.mg>=0?'#f0d9a0':'#f5b7b7'):'#e8e6df';
+    ctx.lineWidth=1;roundRect(ctx,x,ky,kw,72,8);ctx.stroke();
+    ctx.fillStyle='#73726c';ctx.font='500 10px Arial';ctx.fillText(k.label,x+10,ky+17);
+    const col=i>=3?(mgOk?'#00B050':r.mg>=0?'#CC9900':'#FF0000'):i===1?'#185FA5':'#1a1a18';
+    ctx.fillStyle=col;ctx.font='700 16px Arial';ctx.fillText(k.value,x+10,ky+40);
+    ctx.fillStyle='#a3a29c';ctx.font='400 10px Arial';ctx.fillText(k.sub,x+10,ky+58);
+  });
+
+  // 손익 테이블
+  const ty=185,th=22,rows2=[
+    ['투찰금액',fmtW(r.ct)],['공급가액',fmtW(r.rv)],
+    ['(-) 인건비','-'+fmtW(r.lc)],['(-) 외주비','-'+fmtW(r.os)],
+    ['(-) 서버/기타','-'+fmtW(r.svc)],['공헌이익',fmtW(r.cn)],
+    ['(-) 간접비','-'+fmtW(r.ic)],['영업이익',fmtW(r.op)],
+    ['이익률',r.mg.toFixed(2)+'%'],
+  ];
+  ctx.fillStyle='#1a1a18';ctx.font='700 11px Arial';
+  ctx.fillText('손익 계산서',40,ty-8);
+  rows2.forEach((row,i)=>{
+    const y=ty+i*th;
+    ctx.fillStyle=i%2===0?'#fff':'#faf9f7';
+    ctx.fillRect(40,y,340,th);
+    const isBold=i===5||i===7||i===8;
+    ctx.fillStyle=isBold?'#1a1a18':'#73726c';
+    ctx.font=(isBold?'600':'400')+' 12px Arial';
+    ctx.fillText(row[0],52,y+15);
+    const valCol=i===7?(r.op>=0?'#00B050':'#FF0000'):i===8?(r.mg>=10?'#00B050':r.mg>=0?'#CC9900':'#FF0000'):'#1a1a18';
+    ctx.fillStyle=valCol;ctx.font=(isBold?'700':'400')+' 12px Arial';
+    const tw2=ctx.measureText(row[1]).width;
+    ctx.fillText(row[1],380-tw2,y+15);
+  });
+
+  // 인건비 상세
+  const lx=420,lw=340;
+  ctx.fillStyle='#1a1a18';ctx.font='700 11px Arial';ctx.fillText('투입 인력',lx,ty-8);
+  S.labor.slice(0,8).forEach((lr,i)=>{
+    const g=mms[lr.grade];const sub=fl(g.mm*lr.count*lr.mm);
+    const y=ty+i*th;
+    ctx.fillStyle=i%2===0?'#fff':'#faf9f7';ctx.fillRect(lx,y,lw,th);
+    ctx.fillStyle='#73726c';ctx.font='400 11px Arial';
+    const role=(ROLES.find(r=>r.id===(lr.role||'dev'))||ROLES[4]).label;
+    ctx.fillText(GD[lr.grade].label+' '+role+' '+lr.count+'명×'+lr.mm+'MM',lx+10,y+15);
+    ctx.fillStyle='#1a1a18';const tw3=ctx.measureText(fmtW(sub)).width;
+    ctx.fillText(fmtW(sub),lx+lw-tw3-8,y+15);
+  });
+
+  // 푸터
+  ctx.fillStyle='#a3a29c';ctx.font='400 10px Arial';
+  ctx.fillText("d'strict 2026년 노임단가 기준 · 원 단위 미만 절삭 · d'strict B2G Simulator",40,H-22);
+
+  // 다운로드
+  const mime=fmt==='jpeg'?'image/jpeg':'image/png';
+  const ext=fmt==='jpeg'?'jpg':'png';
+  cv.toBlob(blob=>{
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;
+    a.download='B2G_'+datestamp()+'_'+(S.projectName||'snapshot')+'.'+ext;
+    document.body.appendChild(a);a.click();
+    setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},200);
+  },mime,0.95);
+
+  closeModal('modal-snapshot');
+}
+
+function roundRect(ctx,x,y,w,h,r){
+  if(typeof r==='number')r={tl:r,tr:r,bl:r,br:r};
+  ctx.beginPath();
+  ctx.moveTo(x+r.tl,y);ctx.lineTo(x+w-r.tr,y);
+  ctx.quadraticCurveTo(x+w,y,x+w,y+r.tr);
+  ctx.lineTo(x+w,y+h-r.br);ctx.quadraticCurveTo(x+w,y+h,x+w-r.br,y+h);
+  ctx.lineTo(x+r.bl,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r.bl);
+  ctx.lineTo(x,y+r.tl);ctx.quadraticCurveTo(x,y,x+r.tl,y);
+  ctx.closePath();
+}
+
+/* ============================================================
+   HOME RECENT
+============================================================ */
+function renderHomeRecent(){
+  const el=document.getElementById('home-recent');if(!el)return;
+  const projects=getProjects().slice(0,3);
+  if(!projects.length){el.innerHTML='';return;}
+  const mgC=p=>p.result.mg>=10?'var(--kpi-green)':p.result.mg>=0?'var(--kpi-yellow)':'var(--kpi-red)';
+  el.innerHTML=`<div style="margin-top:4px">
+    <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:10px;letter-spacing:0.3px">최근 저장된 프로젝트</div>
+    <div style="display:flex;flex-direction:column;gap:7px">
+      ${projects.map(p=>`<div onclick="loadProject(${p.id});switchPage('simulator')" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:9px;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--purple)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--text)">${p.name}</div>
+          <div style="font-size:10px;color:var(--hint);margin-top:2px">${p.ts} · 기초 ${fmtW(p.state.base)} · 투찰 ${p.state.bid.toFixed(2)}%</div>
+        </div>
+        <span style="padding:3px 9px;border-radius:5px;font-size:11px;font-weight:700;color:${mgC(p)};background:${p.result.mg>=10?'var(--green-bg)':p.result.mg>=0?'var(--amber-bg)':'var(--red-bg)'}">${p.result.mg.toFixed(1)}%</span>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
 
 /* ============================================================
    SNAPSHOT
@@ -2539,9 +3107,9 @@ function bindActionBar(){
     if(close){closeModal(close);return;}
     if(e.target.classList.contains('modal-overlay'))closeModal(e.target.id);
   });
-  document.getElementById('exp-csv').addEventListener('click',()=>{download(buildCSV(),'B2G_'+datestamp()+'.csv','text/csv;charset=utf-8');closeModal('modal-export');});
-  document.getElementById('exp-json').addEventListener('click',()=>{download(buildJSON(),'B2G_'+datestamp()+'.json','application/json');closeModal('modal-export');});
-  document.getElementById('exp-txt').addEventListener('click',()=>{download(buildTXT(),'B2G_'+datestamp()+'.txt','text/plain;charset=utf-8');closeModal('modal-export');});
+  document.getElementById('exp-csv').addEventListener('click',()=>{download(buildExcel(),'B2G_'+datestamp()+'.csv','text/csv;charset=utf-8');closeModal('modal-export');});
+  document.getElementById('exp-json').addEventListener('click',()=>{download(buildWordReport(),'B2G_'+datestamp()+'_보고서.txt','text/plain;charset=utf-8');closeModal('modal-export');});
+  document.getElementById('exp-txt').addEventListener('click',()=>{download(buildPPTNotes(),'B2G_'+datestamp()+'_PPT노트.txt','text/plain;charset=utf-8');closeModal('modal-export');});
   // JSONBin 공유: 버튼들은 inline onclick으로 처리
   document.getElementById('btn-snap-save').addEventListener('click',()=>{const name=document.getElementById('snap-name-inp').value.trim();saveSnapshot(name||undefined);document.getElementById('snap-name-inp').value='';});
 }
