@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>2026 B2G 전략 예산 시뮬레이터</title>
+<title>d'strict B2G Simulator Vol.1.1</title>
+<meta property="og:title" content="d'strict B2G Simulator Vol.1.1">
+<meta property="og:url" content="https://shin3164.github.io/dstrict-dx-b2g-simulator/">
+<meta property="og:description" content="2026 KOSA 노임단가 기준 공공사업 예산 시뮬레이터">
 <style>
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
 :root{
@@ -134,6 +137,17 @@ button{cursor:pointer}
 .tb-btn.purple:hover{background:#4239a0}
 .tb-btn.green{background:rgba(59,109,17,.3);border-color:rgba(59,109,17,.5);color:#86efac}
 .tb-btn.green:hover{background:rgba(59,109,17,.45)}
+.tb-nav-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 14px;border-radius:7px;
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.06);
+  color:rgba(255,255,255,.7);
+  font-size:11px;font-weight:600;cursor:pointer;letter-spacing:0.3px;
+  transition:all .15s;font-family:var(--font);
+}
+.tb-nav-btn:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.4);color:#fff}
+.tb-nav-btn.on{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.5);color:#fff;font-weight:700}
 
 /* VAT BANNER */
 #vat-banner{
@@ -456,16 +470,47 @@ body.readonly #btn-confirm, body.readonly #btn-snapshot{
 body.readonly .icon-btn{pointer-events:none;opacity:.4}
 
 /* RESPONSIVE */
+/* ── 모바일 대응 ── */
 @media(max-width:900px){
-  #main{flex-direction:column}
-  #left{width:100%;max-height:50vh;border-right:none;border-bottom:1px solid var(--border)}
-  #right{width:100%}
+  #main{flex-direction:column;overflow-y:auto}
+  #left{width:100%;max-height:none;border-right:none;border-bottom:1px solid var(--border);overflow-y:visible;padding-bottom:80px}
+  #right{width:100%;overflow-y:visible}
   .kpi-grid{grid-template-columns:repeat(3,1fr)}
   .grade-cards-grid{grid-template-columns:1fr 1fr}
+  #confirm-bar{width:100%!important;left:0!important}
+  #topbar{padding:0 10px;gap:4px;height:44px}
+  .tb-name{font-size:12px}
+  .tb-logo-mark{width:24px;height:24px}
+  #tb-nav{margin-left:4px}
+  .tb-nav-btn{padding:4px 8px;font-size:10px}
+  #page-home{padding:16px 12px}
+  #page-projects{padding:14px 12px}
+  /* 대시보드 차트 모바일: 세로 배치 */
+  .chart-grid-2col{grid-template-columns:1fr!important}
+  /* 시나리오 비교 테이블 스크롤 */
+  .sc-tbl-wrap{overflow-x:auto}
 }
 @media(max-width:600px){
   .kpi-grid{grid-template-columns:repeat(2,1fr)}
   .grade-cards-grid{grid-template-columns:1fr 1fr}
+  #action-bar{gap:4px;padding:5px 8px;flex-wrap:wrap}
+  #action-bar .act-btn-txt{display:none}
+  #action-bar .act-btn{padding:6px 8px;min-width:34px;justify-content:center}
+  #topbar .tb-tag{display:none}
+  .tb-nav-btn{font-size:10px;padding:4px 6px}
+  .labor-grid{grid-template-columns:68px 1fr 34px 46px 56px 16px;gap:3px}
+  .modal-box{max-height:92vh;border-radius:14px 14px 0 0;position:fixed;bottom:0;top:auto;width:100%;max-width:100%}
+  .modal-overlay{align-items:flex-end;padding:0}
+  #page-home>div>div:first-of-type{grid-template-columns:1fr}
+  .dual-num{width:62px;font-size:12px}
+}
+@media(max-width:400px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr);gap:5px}
+  .kpi{padding:8px 10px}
+  .kpi-value{font-size:14px}
+  #page-home>div>div:last-of-type{grid-template-columns:1fr}
+  .tb-nav-btn span{display:none}
+  #topbar{gap:2px;padding:0 8px}
 }
 </style>
 </head>
@@ -510,13 +555,23 @@ body.readonly .icon-btn{pointer-events:none;opacity:.4}
 <div id="app">
   <!-- Topbar -->
   <div id="topbar">
-    <div class="tb-logo">
+    <div class="tb-logo" onclick="switchPage('home')" style="cursor:pointer">
       <div class="tb-logo-mark">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
       </div>
-      <span class="tb-name">B2G Simulator</span>
+      <span class="tb-name">d'strict B2G Simulator <span style='font-size:10px;font-weight:400;opacity:.7'>Vol.1.1</span></span>
     </div>
-    <span class="tb-tag">2026 노임단가 · 2025 개정</span>
+    <!-- 네비게이션 메뉴 -->
+    <div id="tb-nav" style="display:flex;align-items:center;gap:2px;margin-left:12px">
+      <button class="tb-nav-btn on" data-page="simulator" onclick="switchPage('simulator')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        시뮬레이터
+      </button>
+      <button class="tb-nav-btn" data-page="projects" onclick="switchPage('projects')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        프로젝트 관리
+      </button>
+    </div>
     <div class="tb-sep"></div>
   </div>
 
@@ -534,24 +589,77 @@ body.readonly .icon-btn{pointer-events:none;opacity:.4}
     </button>
     <span id="confirm-time" style="font-size:10px;color:var(--hint);letter-spacing:0.2px"></span>
     <div class="sep"></div>
+    <button class="act-btn purple" id="btn-save-project" onclick="saveCurrentProject()" title="현재 프로젝트 데이터 저장">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      프로젝트 저장
+    </button>
     <button class="act-btn" id="btn-snapshot">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-      스냅샷
+      <span class="act-btn-txt">스냅샷</span>
     </button>
     <button class="act-btn green" id="btn-export">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      데이터 추출
+      <span class="act-btn-txt">데이터 추출</span>
     </button>
     <button class="act-btn blue always-active" id="btn-share">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-      링크 공유
+      <span class="act-btn-txt">링크 공유</span>
     </button>
   </div>
 
   <!-- Diff Panel -->
   <div id="diff-panel"></div>
 
-  <!-- Main -->
+  <!-- Home Page -->
+  <div id="page-home" style="display:none;flex:1;overflow-y:auto;padding:32px 24px;background:var(--bg)">
+    <div style="max-width:860px;margin:0 auto">
+      <div style="text-align:center;margin-bottom:36px">
+        <div style="display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:14px;background:var(--purple);margin-bottom:14px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <h1 style="font-size:22px;font-weight:700;color:var(--text);letter-spacing:-0.5px;margin-bottom:6px">d'strict B2G Simulator Vol.1.1</h1>
+        <p style="font-size:13px;color:var(--muted);letter-spacing:0.2px">2026 KOSA 노임단가 기준 · SW사업 대가산정 가이드(2025 개정판)</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" id="home-menu-grid">
+        <div onclick="switchPage('simulator')" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;cursor:pointer;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='var(--purple)';this.style.boxShadow='0 4px 20px rgba(0,0,0,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow=''">
+          <div style="width:44px;height:44px;border-radius:10px;background:var(--blue-bg);display:flex;align-items:center;justify-content:center;margin-bottom:14px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px">시뮬레이터</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6">기초금액·인건비·외주비를 입력하고<br>투찰율별 손익을 실시간 분석합니다.</div>
+        </div>
+        <div onclick="switchPage('projects')" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;cursor:pointer;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='var(--purple)';this.style.boxShadow='0 4px 20px rgba(0,0,0,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow=''">
+          <div style="width:44px;height:44px;border-radius:10px;background:var(--purple-bg);display:flex;align-items:center;justify-content:center;margin-bottom:14px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px">프로젝트 관리</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6">저장된 프로젝트를 관리하고<br>프로젝트 간 비교 분석을 수행합니다.</div>
+        </div>
+      </div>
+      <div id="home-recent" style="margin-top:20px"></div>
+    </div>
+  </div>
+
+  <!-- Projects Page (인라인 전체 페이지) -->
+  <div id="page-projects" style="display:none;flex:1;overflow-y:auto;padding:20px 24px;background:var(--bg)">
+    <div style="max-width:960px;margin:0 auto">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">
+        <div>
+          <h2 style="font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.3px;margin-bottom:3px">프로젝트 관리</h2>
+          <p style="font-size:12px;color:var(--muted)">저장된 프로젝트 목록 · 비교 분석 · 데이터 추출</p>
+        </div>
+      </div>
+      <!-- 탭 -->
+      <div style="display:flex;border-bottom:1px solid var(--border);margin-bottom:18px;overflow-x:auto">
+        <button class="pp-tab on" data-pptab="list" onclick="switchPPTab('list')" style="padding:9px 16px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;border-bottom:2px solid var(--purple);color:var(--purple);margin-bottom:-1px;letter-spacing:0.2px;white-space:nowrap;font-family:var(--font)">📋 목록</button>
+        <button class="pp-tab" data-pptab="compare" onclick="switchPPTab('compare')" style="padding:9px 16px;font-size:12px;font-weight:500;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted);margin-bottom:-1px;letter-spacing:0.2px;white-space:nowrap;font-family:var(--font)">📊 비교 분석</button>
+      </div>
+      <div id="pp-list" style="display:block"><div id="pp-project-list"></div></div>
+      <div id="pp-compare" style="display:none"><div id="pp-compare-wrap"></div></div>
+    </div>
+  </div>
+
+  <!-- Main (Simulator) -->
   <div id="main">
     <div id="left"></div>
     <div id="right"></div>
@@ -685,6 +793,35 @@ body.readonly .icon-btn{pointer-events:none;opacity:.4}
     </button>
   </div>
 
+
+  <!-- ── Projects Modal ── -->
+  <div id="modal-projects" class="modal-overlay" style="display:none">
+    <div class="modal-box" style="max-width:860px;max-height:88vh">
+      <div class="modal-head">
+        <span class="modal-title">📁 프로젝트 관리</span>
+        <button class="modal-close" data-close="modal-projects">✕</button>
+      </div>
+      <div class="modal-body" style="padding:0">
+        <!-- 탭 -->
+        <div style="display:flex;border-bottom:1px solid var(--border);padding:0 18px;background:var(--bg)">
+          <button class="proj-tab on" data-ptab="list" onclick="switchProjTab('list')" style="padding:10px 16px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;border-bottom:2px solid var(--purple);color:var(--purple);margin-bottom:-1px;letter-spacing:0.2px">📋 프로젝트 목록</button>
+          <button class="proj-tab" data-ptab="compare" onclick="switchProjTab('compare')" style="padding:10px 16px;font-size:12px;font-weight:500;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted);margin-bottom:-1px;letter-spacing:0.2px">📊 비교 분석</button>
+        </div>
+        <!-- 목록 탭 -->
+        <div id="ptab-list" style="padding:16px 18px">
+          <div id="project-list-wrap"></div>
+        </div>
+        <!-- 비교 탭 -->
+        <div id="ptab-compare" style="padding:16px 18px;display:none">
+          <div style="font-size:12px;color:var(--muted);margin-bottom:12px;letter-spacing:0.2px">비교할 프로젝트를 선택하세요 (최대 4개)</div>
+          <div id="project-compare-wrap"></div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="pre-btn" data-close="modal-projects">닫기</button>
+      </div>
+    </div>
+  </div>
 
 <script>
 /* ============================================================
@@ -820,13 +957,15 @@ const S={
   svc:  lsGet('b2g4_svc',  10000000),
   indr: lsGet('b2g4_indr', 10),
   sc:   lsGet('b2g4_sc',   {worst:85,avg:90,best:95}),
+  projectName: lsGet('b2g4_projectName',''),
   memo: lsGet('b2g4_memo', ''),
   minBid: lsGet('b2g4_minBid', 70),
+  outsMemo: lsGet('b2g4_outsMemo',''),
 };
 const UI={pOpen:false,tab:'dashboard',detId:null,_uid:400};
 function uid(){return ++UI._uid;}
 function saveKey(k){lsSet('b2g4_'+k,S[k]);}
-function saveAll(){['base','bid','oh','tr','wd','gd','labor','outs','svc','indr','sc','memo','minBid'].forEach(saveKey);}
+function saveAll(){['base','bid','oh','tr','wd','gd','labor','outs','svc','indr','sc','memo','minBid','projectName','outsMemo'].forEach(saveKey);}
 
 /* ============================================================
    HELPERS
@@ -1133,6 +1272,13 @@ function buildLeft(){
     <div class="sc">
       <div class="sc-head"><span class="sc-title">발주 정보</span></div>
       <div class="sc-body">
+        <div style="margin-bottom:13px">
+          <label class="lbl" for="inp_project">프로젝트명</label>
+          <input id="inp_project" type="text" class="inp" value="${S.projectName||''}"
+            placeholder="예: 2026 ○○청 디지털전환 사업"
+            oninput="S.projectName=this.value;saveKey('projectName')"
+            style="font-size:13px" autocomplete="off">
+        </div>
         ${makeMoneyInputHTML({id:'inp_base',value:S.base,label:'기초금액 (VAT 포함)',hint:`낙찰금액 → ${fmtW(fl(S.base*S.bid/100))}`})}
         ${makeDualHTML({id:'bid',label:'현재 투찰율',value:S.bid,min:50,max:100,step:0.01,dec:2,hint:'소수점 2자리',color:'#185FA5'})}
         ${makeDualHTML({id:'minBid',label:'최소 입찰율 (하한)',value:S.minBid,min:50,max:100,step:0.01,dec:2,hint:'시나리오 Best/Worst 탐색 기준',color:'#534AB7'})}
@@ -1217,7 +1363,19 @@ function buildLeft(){
           <button class="btn-cta" id="btn_add_outs" style="padding:4px 11px;font-size:11px;background:var(--purple);border-color:var(--purple)">+ 추가</button>
         </div>
       </div>
-      <div class="sc-body"><div id="outs_list">${buildOutsHTML()}</div></div>
+      <div class="sc-body">
+        <div id="outs_list">${buildOutsHTML()}</div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+          <label class="lbl" style="display:flex;align-items:center;gap:5px;margin-bottom:6px">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted)"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            외주비 메모
+          </label>
+          <textarea id="inp-outs-memo" class="inp" rows="2"
+            placeholder="외주사 협의 내용, 특이사항 등..."
+            style="resize:vertical;min-height:56px;font-size:12px;line-height:1.6"
+            oninput="S.outsMemo=this.value;saveKey('outsMemo')">${S.outsMemo||''}</textarea>
+        </div>
+      </div>
     </div>
 
     <div class="sc">
@@ -1490,13 +1648,13 @@ function buildTabHTML(res,scr){
 function buildDashboardHTML(res){
   const totalCost=res.rv;
   const costSegs=[{name:'인건비',v:fl(res.lc),c:'#185FA5'},{name:'외주비',v:fl(res.os),c:'#534AB7'},{name:'서버/기타',v:fl(res.svc),c:'#854F0B'},{name:'간접비',v:fl(res.ic),c:'#73726c'},{name:'영업이익',v:Math.max(0,fl(res.op)),c:'#3B6D11'}].filter(d=>d.v>0);
-  const catData=OCATS.map(cat=>{const t=S.outs.filter(r=>r.catId===cat.id).reduce((s,r)=>{const v=parseFloat(r.amount)||0;return s+(r.vatIncl?fl(v/1.1):v);},0);return{name:cat.label,v:t,color:cat.color};}).filter(d=>d.v>0);
+  const catData=OCATS.map(cat=>{const t=S.outs.filter(r=>r.catId===cat.id).reduce((s,r)=>{const v=parseFloat(r.amount)||0;return s+(r.vatIncl?fl(v/1.1):v);},0);return{name:cat.label,v:t,color:cat.color};});
   const linePts=[];for(let r=70;r<=100;r+=0.5)linePts.push({x:r,y:+compute(r).mg.toFixed(2)});
   const markPts=[...SC_DEF.map(s=>({x:S.sc[s.key],color:s.color,r:5})),{x:S.bid,color:'#185FA5',r:7}];
 
   return`
     <!-- 비용구조(풀폭) + 외주비 카테고리(사이드) -->
-    <div style="display:grid;grid-template-columns:3fr 2fr;gap:10px;margin-bottom:12px">
+    <div class="chart-grid-2col" style="display:grid;grid-template-columns:3fr 2fr;gap:10px;margin-bottom:12px">
       <div class="sc" style="margin:0">
         <div class="sc-head"><span class="sc-title">매출 대비 비용 구조</span></div>
         <div class="sc-body">
@@ -1520,7 +1678,7 @@ function buildDashboardHTML(res){
       <div class="sc" style="margin:0">
         <div class="sc-head"><span class="sc-title">외주비 카테고리</span></div>
         <div class="sc-body">
-          ${catData.length?makeBarSVG(catData,200):'<div style="height:150px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--hint);background:var(--bg);border-radius:8px;letter-spacing:0.2px">외주비 항목을 추가하세요</div>'}
+          ${makeBarSVG(catData,200)}
         </div>
       </div>
     </div>
@@ -1589,13 +1747,39 @@ function makeDonutSVG(segs,total,size){
   return`<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="display:block;margin:0 auto">${paths}<text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1a18">${segs.length}항목</text></svg>`;
 }
 function makeBarSVG(data,height){
-  const W=340,H=height,pL=32,pB=20,pT=6,pR=8,cW=W-pL-pR,cH=H-pB-pT;
-  const maxV=Math.max(...data.map(d=>d.v))*1.1||1;
-  const bw=Math.floor(cW/data.length*.6),gap=(cW-bw*data.length)/(data.length+1);
-  let bars='',lbls='',grid='';
-  for(let i=0;i<=4;i++){const y=pT+cH-cH*i/4,v=maxV*i/4;const lbl=v>=1e8?(v/1e8).toFixed(1)+'억':v>=1e6?(v/1e6).toFixed(1)+'M':'0';grid+=`<line x1="${pL}" y1="${y}" x2="${W-pR}" y2="${y}" stroke="#e8e6df" stroke-width="1"/><text x="${pL-4}" y="${y+4}" text-anchor="end" font-size="8" fill="#a3a29c">${lbl}</text>`;}
-  data.forEach((d,i)=>{const x=pL+gap+(bw+gap)*i,bh=Math.max(2,(d.v/maxV)*cH),y=pT+cH-bh;bars+=`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" fill="${d.color}" rx="3"/>`;lbls+=`<text x="${x+bw/2}" y="${H-5}" text-anchor="middle" font-size="9" fill="#73726c">${d.name}</text>`;});
-  return`<svg width="100%" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="display:block">${grid}${bars}${lbls}<line x1="${pL}" y1="${pT}" x2="${pL}" y2="${pT+cH}" stroke="#e8e6df"/><line x1="${pL}" y1="${pT+cH}" x2="${W-pR}" y2="${pT+cH}" stroke="#e8e6df"/></svg>`;
+  const W=340,H=height,pL=36,pB=22,pT=20,pR=8,cW=W-pL-pR,cH=H-pB-pT;
+  const maxV=Math.max(...data.map(d=>d.v))||1;
+  const scale=maxV*1.15;
+  const bw=Math.floor(cW/data.length*.58),gap=(cW-bw*data.length)/(data.length+1);
+  let bars='',lbls='',amts='',grid='';
+  // Y축: 억 단위만 (0, 1억, 2억 ... )
+  const tickAmt=v=>{
+    if(v===0)return'0';
+    const uk=v/1e8;
+    if(uk>=1)return(uk%1===0?uk.toFixed(0):uk.toFixed(1))+'억';
+    if(uk>=0.1)return uk.toFixed(1)+'억';
+    return(v/1e6).toFixed(0)>0?(v/1e6).toFixed(0)/100+'억':'0';
+  };
+  for(let i=0;i<=3;i++){
+    const y=pT+cH-cH*i/3,v=scale*i/3;
+    grid+=`<line x1="${pL}" y1="${y.toFixed(1)}" x2="${W-pR}" y2="${y.toFixed(1)}" stroke="#e8e6df" stroke-width="1"/>`;
+    if(i>0)grid+=`<text x="${pL-4}" y="${(y+3).toFixed(1)}" text-anchor="end" font-size="8" fill="#a3a29c">${tickAmt(v)}</text>`;
+  }
+  data.forEach((d,i)=>{
+    const x=pL+gap+(bw+gap)*i;
+    const bh=Math.max(d.v>0?4:1,(d.v/scale)*cH);
+    const y=pT+cH-bh;
+    // 막대
+    bars+=`<rect x="${x}" y="${y.toFixed(1)}" width="${bw}" height="${bh.toFixed(1)}" fill="${d.v>0?d.color:'#e8e6df'}" rx="3" opacity="${d.v>0?0.9:0.3}"/>`;
+    // 막대 상단 금액 (0이 아닐 때만)
+    if(d.v>0){
+      const vLbl=d.v>=1e8?(d.v/1e8).toFixed(1)+'억':d.v>=1e6?(d.v/1e8).toFixed(2)+'억':d.v>0?fmtW(d.v):'';
+      amts+=`<text x="${(x+bw/2).toFixed(1)}" y="${(y-3).toFixed(1)}" text-anchor="middle" font-size="8" fill="${d.color}" font-weight="700">${vLbl}</text>`;
+    }
+    // 카테고리명
+    lbls+=`<text x="${(x+bw/2).toFixed(1)}" y="${H-5}" text-anchor="middle" font-size="8" fill="#73726c">${d.name}</text>`;
+  });
+  return`<svg width="100%" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="display:block">${grid}${bars}${amts}${lbls}<line x1="${pL}" y1="${pT}" x2="${pL}" y2="${pT+cH}" stroke="#e8e6df"/><line x1="${pL}" y1="${(pT+cH).toFixed(1)}" x2="${W-pR}" y2="${(pT+cH).toFixed(1)}" stroke="#e8e6df"/></svg>`;
 }
 function makeLineSVG(pts,marks,height){
   const W=500,H=height,pL=36,pB=24,pT=8,pR=12,cW=W-pL-pR,cH=H-pB-pT;
@@ -1803,6 +1987,502 @@ function doCopyURL(){}  // 미사용 stub
 
 
 /* ============================================================
+   PROJECTS — 프로젝트별 분석 데이터 저장/관리/비교
+============================================================ */
+function getProjects(){return lsGet('b2g5_projects',[]);}
+function saveProjects(arr){lsSet('b2g5_projects',arr);}
+
+function saveCurrentProject(){
+  if(!BASELINE){alert('먼저 변경 적용을 눌러 결과를 확정해주세요.');return;}
+  const name=S.projectName||('프로젝트 '+(getProjects().length+1));
+  const r=compute(S.bid);
+  const proj={
+    id:Date.now(),
+    name:name,
+    ts:new Date().toLocaleString('ko-KR',{hour12:false}),
+    state:JSON.parse(JSON.stringify(S)),
+    result:{ct:r.ct,rv:r.rv,lc:r.lc,os:r.os,svc:r.svc,dt:r.dt,cn:r.cn,ic:r.ic,op:r.op,mg:r.mg},
+    catData:OCATS.map(cat=>{
+      const t=S.outs.filter(r=>r.catId===cat.id).reduce((s,r)=>{const v=parseFloat(r.amount)||0;return s+(r.vatIncl?fl(v/1.1):v);},0);
+      return{id:cat.id,name:cat.label,v:t,color:cat.color};
+    }),
+  };
+  const projects=getProjects();
+  // 같은 이름이면 덮어쓰기 여부 확인
+  const existing=projects.findIndex(p=>p.name===name);
+  if(existing>=0){
+    if(!confirm(`"${name}" 프로젝트가 이미 있습니다. 덮어쓰시겠습니까?`))return;
+    projects[existing]=proj;
+  } else {
+    projects.unshift(proj);
+    if(projects.length>20)projects.pop();
+  }
+  saveProjects(projects);
+  // 버튼 피드백
+  const btn=document.getElementById('btn-save-project');
+  if(btn){const orig=btn.innerHTML;btn.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 저장 완료';btn.style.background='var(--kpi-green)';btn.style.color='#fff';btn.style.borderColor='var(--kpi-green)';setTimeout(()=>{btn.innerHTML=orig;btn.style='';},2000);}
+}
+
+function deleteProject(id){
+  if(!confirm('이 프로젝트를 삭제하시겠습니까?'))return;
+  saveProjects(getProjects().filter(p=>p.id!==id));
+  renderProjectList();
+  renderProjectCompare();
+}
+
+function loadProject(id){
+  const proj=getProjects().find(p=>p.id===id);if(!proj)return;
+  if(!confirm(`"${proj.name}" 프로젝트를 불러오시겠습니까?
+현재 입력값이 변경됩니다.`))return;
+  Object.assign(S,JSON.parse(JSON.stringify(proj.state)));
+  saveAll();
+  buildLeft();buildRight();
+  autoSetScenarios();
+  BASELINE=proj.result;
+  closeModal('modal-projects');
+  const t=document.getElementById('confirm-time');
+  if(t)t.textContent=proj.ts+' 불러옴';
+}
+
+function switchProjTab(tab){
+  document.querySelectorAll('.proj-tab').forEach(b=>{
+    const on=b.dataset.ptab===tab;
+    b.style.borderBottomColor=on?'var(--purple)':'transparent';
+    b.style.color=on?'var(--purple)':'var(--muted)';
+    b.style.fontWeight=on?'600':'500';
+  });
+  document.getElementById('ptab-list').style.display=tab==='list'?'block':'none';
+  document.getElementById('ptab-compare').style.display=tab==='compare'?'block':'none';
+  if(tab==='compare')renderProjectCompare();
+}
+
+function renderProjectList(){
+  const el=document.getElementById('project-list-wrap');if(!el)return;
+  const projects=getProjects();
+  if(!projects.length){
+    el.innerHTML=`<div style="text-align:center;padding:40px 20px;color:var(--hint)">
+      <div style="font-size:32px;margin-bottom:12px">📂</div>
+      <div style="font-size:13px;margin-bottom:6px;color:var(--muted)">저장된 프로젝트가 없습니다</div>
+      <div style="font-size:11px">좌측 입력값을 설정하고 상단의 <strong>프로젝트 저장</strong> 버튼을 클릭하세요.</div>
+    </div>`;
+    return;
+  }
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px">
+      ${projects.map(p=>{
+        const mgC=p.result.mg>=10?'var(--kpi-green)':p.result.mg>=0?'var(--kpi-yellow)':'var(--kpi-red)';
+        const mgBg=p.result.mg>=10?'var(--green-bg)':p.result.mg>=0?'var(--amber-bg)':'var(--red-bg)';
+        const catBars=p.catData.filter(c=>c.v>0).map(c=>`
+          <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted)">
+            <span style="width:7px;height:7px;border-radius:1px;background:${c.color};flex-shrink:0;display:inline-block"></span>
+            <span style="flex:1">${c.name}</span>
+            <span style="font-weight:600;color:var(--text)">${fmtW(c.v)}</span>
+          </div>`).join('');
+        return`<div style="border:1px solid var(--border);border-radius:10px;background:var(--card);padding:14px 15px;transition:border-color .15s" onmouseover="this.style.borderColor='var(--purple)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--text);letter-spacing:-0.3px;margin-bottom:2px">${p.name}</div>
+              <div style="font-size:10px;color:var(--hint)">${p.ts} · 기초 ${fmtW(p.state.base)} · 투찰 ${p.state.bid.toFixed(2)}%</div>
+            </div>
+            <span style="padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${mgBg};color:${mgC};flex-shrink:0">${p.result.mg.toFixed(2)}%</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div style="background:var(--bg);border-radius:6px;padding:7px 9px">
+              <div style="font-size:9px;color:var(--hint);margin-bottom:2px">공급가액</div>
+              <div style="font-size:12px;font-weight:700;color:var(--blue)">${fmtW(p.result.rv)}</div>
+            </div>
+            <div style="background:var(--bg);border-radius:6px;padding:7px 9px">
+              <div style="font-size:9px;color:var(--hint);margin-bottom:2px">인건비</div>
+              <div style="font-size:12px;font-weight:700;color:var(--red)">${fmtW(p.result.lc)}</div>
+            </div>
+            <div style="background:var(--bg);border-radius:6px;padding:7px 9px">
+              <div style="font-size:9px;color:var(--hint);margin-bottom:2px">영업이익</div>
+              <div style="font-size:12px;font-weight:700;color:${mgC}">${fmtW(p.result.op)}</div>
+            </div>
+          </div>
+          ${catBars?`<div style="display:flex;flex-direction:column;gap:4px;margin-bottom:10px;padding:8px 10px;background:var(--bg);border-radius:7px">${catBars}</div>`:''}
+          <div style="display:flex;gap:6px">
+            <button onclick="loadProject(${p.id})" style="flex:1;padding:6px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--muted);cursor:pointer;font-family:var(--font);transition:all .12s" onmouseover="this.style.background='var(--blue-bg)';this.style.color='var(--blue)'" onmouseout="this.style.background='var(--card)';this.style.color='var(--muted)'">불러오기</button>
+            <button onclick="deleteProject(${p.id})" style="padding:6px 12px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--red);cursor:pointer;font-family:var(--font);transition:all .12s" onmouseover="this.style.background='var(--red-bg)'" onmouseout="this.style.background='var(--card)'">삭제</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+function renderProjectCompare(){
+  const el=document.getElementById('project-compare-wrap');if(!el)return;
+  const projects=getProjects();
+  if(projects.length<2){
+    el.innerHTML='<div style="text-align:center;padding:30px;color:var(--hint);font-size:12px">비교하려면 프로젝트가 2개 이상 필요합니다.</div>';
+    return;
+  }
+  const selected=projects.slice(0,4); // 최신 4개 자동 선택
+  const cols=selected.map(p=>{
+    const mgC=p.result.mg>=10?'var(--kpi-green)':p.result.mg>=0?'var(--kpi-yellow)':'var(--kpi-red)';
+    return{p,mgC};
+  });
+  const metrics=[
+    {label:'기초금액',fn:p=>fmtW(p.state.base)},
+    {label:'투찰율',fn:p=>p.state.bid.toFixed(2)+'%'},
+    {label:'공급가액',fn:p=>fmtW(p.result.rv)},
+    {label:'인건비',fn:p=>fmtW(p.result.lc)},
+    {label:'외주비',fn:p=>fmtW(p.result.os)},
+    {label:'공헌이익',fn:p=>fmtW(p.result.cn)},
+    {label:'영업이익',fn:p=>fmtW(p.result.op),bold:true},
+    {label:'이익률',fn:p=>p.result.mg.toFixed(2)+'%',bold:true,color:true},
+  ];
+  // 이익률 바 차트
+  const maxMg=Math.max(...selected.map(p=>Math.abs(p.result.mg)),1);
+  const barChart=`<div style="display:grid;grid-template-columns:${selected.map(()=>'1fr').join(' ')};gap:8px;margin-bottom:16px">
+    ${cols.map(({p,mgC})=>`
+      <div style="text-align:center">
+        <div style="font-size:10px;color:var(--hint);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
+        <div style="height:80px;background:var(--bg);border-radius:6px;display:flex;align-items:flex-end;padding:4px;overflow:hidden">
+          <div style="width:100%;border-radius:4px;background:${mgC};height:${Math.max(4,(Math.abs(p.result.mg)/maxMg)*100).toFixed(0)}%;transition:height .4s;display:flex;align-items:center;justify-content:center">
+            <span style="font-size:11px;font-weight:700;color:#fff">${p.result.mg.toFixed(1)}%</span>
+          </div>
+        </div>
+      </div>`).join('')}
+  </div>`;
+
+  const tableRows=metrics.map(m=>`
+    <tr>
+      <td style="padding:7px 10px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap">${m.label}</td>
+      ${cols.map(({p,mgC})=>{
+        const val=m.fn(p);
+        const col=m.color?mgC:m.bold?'var(--text)':'var(--muted)';
+        return`<td style="padding:7px 10px;font-size:12px;font-weight:${m.bold?700:400};color:${col};border-bottom:1px solid var(--border);text-align:center">${val}</td>`;
+      }).join('')}
+    </tr>`).join('');
+
+  el.innerHTML=`
+    ${barChart}
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr>
+          <th style="padding:8px 10px;font-size:11px;color:var(--muted);font-weight:600;border-bottom:2px solid var(--border);text-align:left">항목</th>
+          ${cols.map(({p,mgC})=>`<th style="padding:8px 10px;font-size:11px;font-weight:700;border-bottom:2px solid var(--border);text-align:center;color:${mgC}">${p.name}<br><span style="font-size:10px;color:var(--hint);font-weight:400">${p.ts.slice(0,10)}</span></th>`).join('')}
+        </tr></thead>
+        <tbody>${tableRows}</tbody>
+      </table>
+    </div>
+    <div style="margin-top:10px;font-size:10px;color:var(--hint);text-align:center">최신 ${selected.length}개 프로젝트 자동 비교 · 전체 비교는 목록에서 불러오기 후 재저장</div>`;
+}
+
+/* ============================================================
+   PAGE NAVIGATION
+============================================================ */
+let CURRENT_PAGE = 'simulator';
+
+function switchPage(page){
+  CURRENT_PAGE = page;
+  // 페이지 표시/숨김
+  const pages = {
+    home: document.getElementById('page-home'),
+    projects: document.getElementById('page-projects'),
+    simulator: document.getElementById('main'),
+  };
+  Object.keys(pages).forEach(k=>{
+    if(pages[k]) pages[k].style.display = k===page ? (k==='main'||k==='simulator'?'flex':'block') : 'none';
+  });
+  // action-bar, vat-banner: simulator일 때만 표시
+  const showSim = page==='simulator';
+  const ab = document.getElementById('action-bar');
+  const vb = document.getElementById('vat-banner');
+  const cb = document.getElementById('confirm-bar');
+  if(ab) ab.style.display = showSim ? 'flex' : 'none';
+  if(vb) vb.style.display = showSim ? 'flex' : 'none';
+  if(cb) cb.style.display = showSim ? 'block' : 'none';
+  // nav 버튼 active
+  document.querySelectorAll('.tb-nav-btn').forEach(b=>{
+    b.classList.toggle('on', b.dataset.page===page || (page==='home'&&b.dataset.page==='simulator'));
+  });
+  // 페이지별 초기화
+  if(page==='home') renderHomePage();
+  if(page==='projects'){ renderPPList(); switchPPTab('list'); }
+  if(page==='simulator'){
+    const cb2=document.getElementById('confirm-bar');
+    if(cb2)cb2.style.display='block';
+  }
+}
+
+function renderHomePage(){
+  const projects = getProjects();
+  const el = document.getElementById('home-recent');
+  if(!el) return;
+  if(!projects.length){ el.innerHTML=''; return; }
+  const recent = projects.slice(0,3);
+  el.innerHTML=`
+    <div style="margin-top:4px;margin-bottom:10px;font-size:12px;font-weight:700;color:var(--muted);letter-spacing:0.3px;text-transform:uppercase">최근 프로젝트</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      ${recent.map(p=>{
+        const mgC=p.result.mg>=10?'var(--kpi-green)':p.result.mg>=0?'var(--kpi-yellow)':'var(--kpi-red)';
+        const mgBg=p.result.mg>=10?'var(--green-bg)':p.result.mg>=0?'var(--amber-bg)':'var(--red-bg)';
+        return`<div onclick="loadProject(${p.id})" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color .15s" onmouseover="this.style.borderColor='var(--purple)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
+            <div style="font-size:10px;color:var(--hint)">${p.ts} · 기초 ${fmtW(p.state.base)} · 투찰 ${p.state.bid.toFixed(2)}%</div>
+          </div>
+          <span style="padding:3px 10px;border-radius:5px;font-size:12px;font-weight:700;background:${mgBg};color:${mgC};flex-shrink:0">${p.result.mg.toFixed(2)}%</span>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+/* 프로젝트 페이지 탭 */
+function switchPPTab(tab){
+  document.querySelectorAll('.pp-tab').forEach(b=>{
+    const on=b.dataset.pptab===tab;
+    b.style.borderBottomColor=on?'var(--purple)':'transparent';
+    b.style.color=on?'var(--purple)':'var(--muted)';
+    b.style.fontWeight=on?'600':'500';
+  });
+  document.getElementById('pp-list').style.display=tab==='list'?'block':'none';
+  document.getElementById('pp-compare').style.display=tab==='compare'?'block':'none';
+  if(tab==='compare') renderPPCompare();
+}
+
+/* 프로젝트 목록 (페이지형) */
+function renderPPList(){
+  const el=document.getElementById('pp-project-list'); if(!el) return;
+  const projects=getProjects();
+  if(!projects.length){
+    el.innerHTML=`<div style="text-align:center;padding:60px 20px;color:var(--hint)">
+      <div style="font-size:40px;margin-bottom:14px">📂</div>
+      <div style="font-size:14px;color:var(--muted);margin-bottom:6px">저장된 프로젝트가 없습니다</div>
+      <div style="font-size:12px">시뮬레이터에서 입력 후 <strong>프로젝트 저장</strong> 버튼을 클릭하세요.</div>
+    </div>`;
+    return;
+  }
+  el.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px">
+      ${projects.map(p=>{
+        const mgC=p.result.mg>=10?'var(--kpi-green)':p.result.mg>=0?'var(--kpi-yellow)':'var(--kpi-red)';
+        const mgBg=p.result.mg>=10?'var(--green-bg)':p.result.mg>=0?'var(--amber-bg)':'var(--red-bg)';
+        const catBars=p.catData.filter(c=>c.v>0).map(c=>`
+          <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted)">
+            <span style="width:7px;height:7px;border-radius:1px;background:${c.color};flex-shrink:0;display:inline-block"></span>
+            <span style="flex:1">${c.name}</span>
+            <span style="font-weight:600;color:var(--text)">${fmtW(c.v)}</span>
+          </div>`).join('');
+        return`<div style="border:1px solid var(--border);border-radius:12px;background:var(--card);padding:16px;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='var(--purple)';this.style.boxShadow='0 2px 12px rgba(0,0,0,.07)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow=''">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:12px">
+            <div style="min-width:0">
+              <div style="font-size:14px;font-weight:700;color:var(--text);letter-spacing:-0.3px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
+              <div style="font-size:10px;color:var(--hint)">${p.ts}</div>
+            </div>
+            <span style="padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${mgBg};color:${mgC};flex-shrink:0">${p.result.mg.toFixed(2)}%</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div style="background:var(--bg);border-radius:7px;padding:8px 10px">
+              <div style="font-size:9px;color:var(--hint);margin-bottom:2px;text-transform:uppercase;letter-spacing:0.3px">공급가액</div>
+              <div style="font-size:12px;font-weight:700;color:var(--blue)">${fmtW(p.result.rv)}</div>
+            </div>
+            <div style="background:var(--bg);border-radius:7px;padding:8px 10px">
+              <div style="font-size:9px;color:var(--hint);margin-bottom:2px;text-transform:uppercase;letter-spacing:0.3px">인건비</div>
+              <div style="font-size:12px;font-weight:700;color:var(--red)">${fmtW(p.result.lc)}</div>
+            </div>
+            <div style="background:var(--bg);border-radius:7px;padding:8px 10px">
+              <div style="font-size:9px;color:var(--hint);margin-bottom:2px;text-transform:uppercase;letter-spacing:0.3px">영업이익</div>
+              <div style="font-size:12px;font-weight:700;color:${mgC}">${fmtW(p.result.op)}</div>
+            </div>
+          </div>
+          ${catBars?`<div style="display:flex;flex-direction:column;gap:4px;margin-bottom:10px;padding:8px 10px;background:var(--bg);border-radius:8px">${catBars}</div>`:''}
+          <div style="display:flex;gap:6px">
+            <button onclick="loadProject(${p.id});switchPage('simulator')" style="flex:1;padding:7px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--blue);cursor:pointer;font-family:var(--font)" onmouseover="this.style.background='var(--blue-bg)'" onmouseout="this.style.background='var(--card)'">불러오기</button>
+            <button onclick="exportOneProject(${p.id})" style="padding:7px 10px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--green);cursor:pointer;font-family:var(--font)" onmouseover="this.style.background='var(--green-bg)'" onmouseout="this.style.background='var(--card)'">추출</button>
+            <button onclick="deletePPProject(${p.id})" style="padding:7px 10px;font-size:11px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--red);cursor:pointer;font-family:var(--font)" onmouseover="this.style.background='var(--red-bg)'" onmouseout="this.style.background='var(--card)'">삭제</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+function deletePPProject(id){
+  if(!confirm('이 프로젝트를 삭제하시겠습니까?'))return;
+  saveProjects(getProjects().filter(p=>p.id!==id));
+  renderPPList();
+  renderPPCompare();
+}
+
+/* 단일 프로젝트 CSV 추출 */
+function exportOneProject(id){
+  const p=getProjects().find(x=>x.id===id);
+  if(!p)return;
+  const Q=v=>'"'+String(v).replace(/"/g,'""')+'"';
+  const rows=[
+    ['프로젝트명',p.name],['저장일시',p.ts],['기초금액',p.state.base],['투찰율',p.state.bid.toFixed(2)+'%'],
+    ['공급가액',p.result.rv],['인건비',p.result.lc],['외주비',p.result.os],
+    ['공헌이익',p.result.cn],['영업이익',p.result.op],['이익률',p.result.mg.toFixed(2)+'%'],
+    [],['[외주비 카테고리]','금액(원)'],
+    ...p.catData.filter(c=>c.v>0).map(c=>[c.name,c.v]),
+  ];
+  download('﻿'+rows.map(r=>r.map(Q).join(',')).join('\r\n'),
+    'B2G_'+p.name.replace(/[\/:*?"<>|]/g,'_')+'_'+datestamp()+'.csv',
+    'text/csv;charset=utf-8');
+}
+
+/* 비교 분석 + 추출 (페이지형) */
+/* 선택된 비교 프로젝트 ID 목록 */
+let COMPARE_SELECTED = [];
+
+function renderPPCompare(){
+  const el=document.getElementById('pp-compare-wrap'); if(!el) return;
+  const projects=getProjects();
+  if(projects.length<2){
+    el.innerHTML='<div style="text-align:center;padding:40px;color:var(--hint);font-size:13px">비교하려면 저장된 프로젝트가 2개 이상 필요합니다.</div>';
+    return;
+  }
+
+  // 선택 상태 초기화 (최초 또는 새 프로젝트 추가 시)
+  if(COMPARE_SELECTED.length===0){
+    COMPARE_SELECTED=projects.slice(0,Math.min(4,projects.length)).map(p=>p.id);
+  }
+
+  const mgC=p=>p.result.mg>=10?'var(--kpi-green)':p.result.mg>=0?'var(--kpi-yellow)':' var(--kpi-red)';
+
+  // ── 프로젝트 선택 체크박스 ──
+  const checkboxes=`
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:14px">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px">
+        비교할 프로젝트 선택 <span style="font-weight:400;color:var(--hint)">(최대 6개)</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        ${projects.map(p=>`
+          <label style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1.5px solid ${COMPARE_SELECTED.includes(p.id)?'var(--purple)':'var(--border)'};background:${COMPARE_SELECTED.includes(p.id)?'var(--purple-bg)':'var(--bg)'};cursor:pointer;transition:all .15s;font-size:12px;font-weight:${COMPARE_SELECTED.includes(p.id)?700:400};color:${COMPARE_SELECTED.includes(p.id)?'var(--purple)':'var(--muted)'}">
+            <input type="checkbox" ${COMPARE_SELECTED.includes(p.id)?'checked':''} onchange="toggleCompareProject(${p.id})" style="display:none">
+            <span style="width:7px;height:7px;border-radius:50%;background:${mgC(p)};flex-shrink:0;display:inline-block"></span>
+            ${p.name}
+            <span style="font-size:10px;color:var(--hint);font-weight:400">${p.result.mg.toFixed(1)}%</span>
+          </label>`).join('')}
+      </div>
+    </div>`;
+
+  const selected=projects.filter(p=>COMPARE_SELECTED.includes(p.id));
+  if(selected.length<2){
+    el.innerHTML=checkboxes+'<div style="text-align:center;padding:30px;color:var(--hint);font-size:12px">2개 이상 선택하면 비교표가 표시됩니다.</div>';
+    return;
+  }
+
+  const maxMg=Math.max(...selected.map(p=>Math.abs(p.result.mg)),1);
+
+  // ── 이익률 바차트 ──
+  const barChart=`<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px">
+    <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px">영업이익률 비교</div>
+    <div style="display:flex;align-items:flex-end;gap:8px;height:120px;overflow-x:auto;padding-bottom:4px">
+      ${selected.map(p=>`
+        <div style="flex:1;min-width:60px;max-width:140px;display:flex;flex-direction:column;align-items:center;gap:4px">
+          <span style="font-size:11px;font-weight:700;color:${mgC(p)}">${p.result.mg.toFixed(1)}%</span>
+          <div style="width:100%;background:var(--bg);border-radius:6px 6px 0 0;height:80px;display:flex;align-items:flex-end">
+            <div style="width:100%;border-radius:6px 6px 0 0;background:${mgC(p)};height:${Math.max(8,(Math.abs(p.result.mg)/maxMg)*80).toFixed(0)}px;opacity:0.85"></div>
+          </div>
+          <div style="font-size:9px;color:var(--hint);text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%">${p.name}</div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+
+  // ── 비교 테이블 ──
+  const metrics=[
+    {label:'기초금액',key:'base',fn:p=>p.state.base,fmt:v=>fmtW(v)},
+    {label:'투찰율',key:'bid',fn:p=>p.state.bid,fmt:v=>v.toFixed(2)+'%'},
+    {label:'공급가액',key:'rv',fn:p=>p.result.rv,fmt:v=>fmtW(v)},
+    {label:'인건비',key:'lc',fn:p=>p.result.lc,fmt:v=>fmtW(v)},
+    {label:'외주비',key:'os',fn:p=>p.result.os,fmt:v=>fmtW(v)},
+    {label:'공헌이익',key:'cn',fn:p=>p.result.cn,fmt:v=>fmtW(v),bold:true},
+    {label:'영업이익',key:'op',fn:p=>p.result.op,fmt:v=>fmtW(v),bold:true},
+    {label:'이익률',key:'mg',fn:p=>p.result.mg,fmt:v=>v.toFixed(2)+'%',bold:true,color:true},
+  ];
+
+  const tbl=`<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px">
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;min-width:400px">
+        <thead><tr style="background:var(--bg)">
+          <th style="padding:10px 12px;font-size:10px;color:var(--muted);font-weight:700;border-bottom:1px solid var(--border);text-align:left;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap">항목</th>
+          ${selected.map(p=>`<th style="padding:10px 12px;font-size:11px;font-weight:700;border-bottom:1px solid var(--border);text-align:center;color:${mgC(p)}"><div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:120px">${p.name}</div><div style="font-size:9px;color:var(--hint);font-weight:400">${p.ts.slice(0,10)}</div></th>`).join('')}
+        </tr></thead>
+        <tbody>${metrics.map((m,ri)=>{
+          const vals=selected.map(p=>m.fn(p));
+          const maxV=Math.max(...vals.filter(v=>typeof v==='number'&&!isNaN(v)));
+          return`<tr style="background:${ri%2===0?'var(--card)':'var(--bg)'}">
+            <td style="padding:8px 12px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;font-weight:${m.bold?600:400}">${m.label}</td>
+            ${selected.map(p=>{
+              const v=m.fn(p);
+              const isMax=typeof v==='number'&&v===maxV&&maxV>0;
+              const col=m.color?mgC(p):m.bold?'var(--text)':'var(--muted)';
+              return`<td style="padding:8px 12px;font-size:12px;font-weight:${m.bold?700:400};color:${col};border-bottom:1px solid var(--border);text-align:center;${isMax&&!m.color?'background:var(--green-bg)':''}">${m.fmt(v)}</td>`;
+            }).join('')}
+          </tr>`;
+        }).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+
+  el.innerHTML=`${checkboxes}${barChart}${tbl}
+    <div style="display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap">
+      <button onclick="exportCompareXLSX()" style="padding:10px 20px;font-size:12px;font-weight:700;border:none;border-radius:8px;background:#217346;color:#fff;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px;box-shadow:0 2px 8px rgba(33,115,70,.3)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        엑셀 추출 (.xlsx)
+      </button>
+    </div>`;
+}
+
+function toggleCompareProject(id){
+  if(COMPARE_SELECTED.includes(id)){
+    if(COMPARE_SELECTED.length<=2)return; // 최소 2개 유지
+    COMPARE_SELECTED=COMPARE_SELECTED.filter(i=>i!==id);
+  } else {
+    if(COMPARE_SELECTED.length>=6)return; // 최대 6개
+    COMPARE_SELECTED.push(id);
+  }
+  renderPPCompare();
+}
+
+/* 비교 분석 엑셀 추출 (CSV + BOM, 회계 형식) */
+function exportCompareXLSX(){
+  const projects=getProjects().filter(p=>COMPARE_SELECTED.includes(p.id));
+  if(!projects.length){alert('선택된 프로젝트가 없습니다.');return;}
+  const Q=v=>'"'+String(v).replace(/"/g,'""')+'"';
+  const acct=v=>typeof v==='number'?v.toLocaleString('ko-KR'):'';
+  const pct=v=>typeof v==='number'?v.toFixed(2)+'%':'';
+  const rows=[];
+  rows.push(["d'strict B2G Simulator Vol.1.1 — 프로젝트 비교 분석","","","생성:",new Date().toLocaleString('ko-KR')]);
+  rows.push(["선택 프로젝트",...projects.map(p=>p.name)]);
+  rows.push(["분석 일시",...projects.map(p=>p.ts)]);
+  rows.push([]);
+  rows.push(["[투찰 정보]",...projects.map(()=>"")]);
+  rows.push(["기초금액 (원)",...projects.map(p=>acct(p.state.base))]);
+  rows.push(["투찰율",...projects.map(p=>pct(p.state.bid))]);
+  rows.push(["낙찰금액 (원)",...projects.map(p=>acct(p.result.ct))]);
+  rows.push(["공급가액 (원)",...projects.map(p=>acct(p.result.rv))]);
+  rows.push([]);
+  rows.push(["[손익 계산서]",...projects.map(()=>"")]);
+  rows.push(["(-) 인건비 (원)",...projects.map(p=>acct(p.result.lc))]);
+  rows.push(["(-) 외주비 공급가액 (원)",...projects.map(p=>acct(p.result.os))]);
+  rows.push(["(-) 서버/기타 (원)",...projects.map(p=>acct(p.result.svc||0))]);
+  rows.push(["공헌이익 (원)",...projects.map(p=>acct(p.result.cn))]);
+  rows.push(["(-) 간접비 (원)",...projects.map(p=>acct(p.result.ic))]);
+  rows.push(["영업이익 (원)",...projects.map(p=>acct(p.result.op))]);
+  rows.push(["영업이익률 (%)",...projects.map(p=>pct(p.result.mg))]);
+  rows.push([]);
+  rows.push(["[외주비 카테고리]",...projects.map(()=>"")]);
+  const catMap={contents:"콘텐츠",hardware:"하드웨어",interior:"인테리어",construct:"건축/시공",direct:"직접경비"};
+  Object.entries(catMap).forEach(([cid,cname])=>{
+    rows.push([cname+" (원)",...projects.map(p=>{
+      const cd=(p.catData||[]).find(c=>c.id===cid);
+      return acct(cd?cd.v:0);
+    })]);
+  });
+  rows.push([]);
+  rows.push(["참고: 2026 KOSA SW사업 대가산정 가이드(2025 개정판) · 금액 단위: 원(KRW)"]);
+  download('﻿'+rows.map(r=>r.map(Q).join(',')).join('\r\n'),
+    'B2G_비교분석_'+datestamp()+'.csv','text/csv;charset=utf-8');
+}
+function exportCompareCSV(){exportCompareXLSX();}
+function exportCompareJSON(){exportCompareXLSX();}
+
+/* ============================================================
    SNAPSHOT
 ============================================================ */
 function getSnaps(){return lsGet('b2g4_snaps',[]);}
@@ -1845,6 +2525,7 @@ function openModal(id){
   const el=document.getElementById(id);if(el)el.style.display='flex';
   if(id==='modal-snapshot')renderSnapList();
   if(id==='modal-share'){resetShareModal();}
+  // modal-projects → switchPage('projects')로 대체됨
 }
 function closeModal(id){const el=document.getElementById(id);if(el)el.style.display='none';}
 
@@ -1896,12 +2577,11 @@ function bindActionBar(){
     IS_READONLY=false;
     document.getElementById('screen-login').classList.remove('active');
     document.getElementById('app').classList.add('active');
-    const cb=document.getElementById('confirm-bar');
-    if(cb)cb.style.display='block';
     buildLeft();buildRight();bindActionBar();
     autoSetScenarios();
     BASELINE=null;
     document.getElementById('confirm-time').textContent='';
+    switchPage('simulator');
   }
 })();
 </script>
