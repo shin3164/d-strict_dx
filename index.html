@@ -2336,12 +2336,16 @@ function makeBarSVG(data,height){
   }
   data.forEach((d,i)=>{
     const x=pL+i*slotW+pad;
-    const bh=d.v>0?Math.max(4,(d.v/scale)*cH):1;
+    const rawBh=d.v>0?(d.v/scale)*cH:0;
+    const bh=d.v>0?Math.max(10,rawBh):1;  // 최소 10px — 작은 값도 항상 보이도록
     const y=pT+cH-bh;
     bars+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw}" height="${bh.toFixed(1)}" fill="${d.v>0?d.color:'#e8e6df'}" rx="3" opacity="${d.v>0?0.9:0.3}"/>`;
     if(d.v>0){
-      const vLbl=fmtW(d.v).replace('원','');// 단위 자동
-      amts+=`<text x="${(x+bw/2).toFixed(1)}" y="${(y-3).toFixed(1)}" text-anchor="middle" font-size="8" fill="${d.color}" font-weight="700">${vLbl}</text>`;
+      const vLbl=fmtW(d.v).replace('원','');
+      // 막대가 충분히 크면 위에, 작으면(rawBh<20) 막대 바로 위 강조 표시
+      const lblY=rawBh<20?(y-5):(y-3);
+      const lblColor=rawBh<20?d.color:d.color;
+      amts+=`<text x="${(x+bw/2).toFixed(1)}" y="${lblY.toFixed(1)}" text-anchor="middle" font-size="${rawBh<20?9:8}" fill="${lblColor}" font-weight="700">${vLbl}</text>`;
     }
     lbls+=`<text x="${(x+bw/2).toFixed(1)}" y="${H-6}" text-anchor="middle" font-size="8" fill="#73726c">${d.name}</text>`;
   });
