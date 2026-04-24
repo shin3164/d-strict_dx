@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>d'strict B2G Simulator Vol.1.3.3</title>
-<meta property="og:title" content="d'strict B2G Simulator Vol.1.3.3">
+<title>d'strict B2G Simulator Vol.1.3.4</title>
+<meta property="og:title" content="d'strict B2G Simulator Vol.1.3.4">
 <meta property="og:url" content="https://shin3164.github.io/dstrict-dx-b2g-simulator/">
 <meta property="og:description" content="d'strict B2G 전략 예산 시뮬레이터 — 공공사업 투찰율·손익 분석 도구">
 <style>
@@ -546,7 +546,7 @@ body.readonly .icon-btn{pointer-events:none;opacity:.4}
 /* ── 외주비 항목 행 정렬 ── */
 .outs-row-inner{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 
-/* ── UX 개선 Vol.1.3.3 ── */
+/* ── UX 개선 Vol.1.3.4 ── */
 
 /* 좌측 스크롤 시 결과 고정 */
 #left{scroll-behavior:smooth}
@@ -705,6 +705,133 @@ body{ line-height:1.5; }
 #left{ padding:16px !important; }
 #right{ padding:18px 20px !important; }
 
+
+/* ── 패널 접기/펼치기 ── */
+#left, #right {
+  transition: width 0.25s cubic-bezier(.4,0,.2,1), padding 0.25s;
+  position: relative;
+}
+
+/* 접기 버튼 공통 */
+.panel-collapse-btn {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font);
+  letter-spacing: 0.2px;
+  transition: all .15s;
+  white-space: nowrap;
+  margin-bottom: 8px;
+}
+.panel-collapse-btn:hover {
+  background: var(--border);
+  color: var(--text);
+}
+/* 좌측 버튼: 우측 정렬 */
+#btn-collapse-left {
+  float: right;
+  clear: both;
+}
+/* 우측 버튼: 좌측 정렬 */
+#btn-collapse-right {
+  float: left;
+  clear: both;
+}
+
+/* 접혔을 때 패널 */
+#left.collapsed {
+  width: 36px !important;
+  min-width: 36px;
+  padding: 8px 4px !important;
+  overflow: hidden;
+}
+#right.collapsed {
+  width: 36px !important;
+  min-width: 36px;
+  padding: 8px 4px !important;
+  overflow: hidden;
+}
+
+/* 접힌 상태 탭 버튼 */
+.panel-tab {
+  display: none;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 6px;
+  cursor: pointer;
+  margin: 0 auto;
+  font-family: var(--font);
+  letter-spacing: 0.3px;
+  transition: all .15s;
+  width: 24px;
+  text-align: center;
+}
+.panel-tab:hover {
+  background: var(--border);
+  color: var(--text);
+}
+#left.collapsed .panel-tab,
+#right.collapsed .panel-tab {
+  display: block;
+}
+#left.collapsed > *:not(.panel-tab),
+#right.collapsed > *:not(.panel-tab) {
+  display: none !important;
+}
+#left.collapsed .panel-tab,
+#right.collapsed .panel-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 확장 시 나머지 패널이 남은 너비 차지 */
+#left:not(.collapsed) ~ #right:not(.collapsed) {
+  width: 60%;
+}
+#left.collapsed ~ #right:not(.collapsed) {
+  width: calc(100% - 36px);
+}
+#left:not(.collapsed).expanded {
+  width: calc(100% - 36px);
+}
+
+
+/* 모바일에서 패널 접기 버튼 숨김 */
+@media(max-width:900px){
+  .panel-collapse-btn { display: none !important; }
+  .panel-tab { display: none !important; }
+  #left.collapsed, #right.collapsed {
+    width: 100% !important;
+    padding: 14px !important;
+    overflow: visible !important;
+  }
+  #left.collapsed > *, #right.collapsed > * {
+    display: block !important;
+  }
+  /* 모바일 overflow-x 방지 */
+  body { overflow-x: hidden; }
+  #main { overflow-x: hidden; }
+}
+
 </style>
 </head>
 <body>
@@ -752,7 +879,7 @@ body{ line-height:1.5; }
       <div class="tb-logo-mark">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
       </div>
-      <span class="tb-name">d'strict B2G Simulator <span style='font-size:10px;font-weight:400;opacity:.7'>Vol.1.3.3</span></span>
+      <span class="tb-name">d'strict B2G Simulator <span style='font-size:10px;font-weight:400;opacity:.7'>Vol.1.3.4</span></span>
     </div>
     <!-- 네비게이션 메뉴 -->
     <div id="tb-nav" style="display:flex;align-items:center;gap:2px;margin-left:12px">
@@ -821,7 +948,7 @@ body{ line-height:1.5; }
         <div style="display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:14px;background:var(--purple);margin-bottom:14px">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
         </div>
-        <h1 style="font-size:22px;font-weight:700;color:var(--text);letter-spacing:-0.5px;margin-bottom:6px">d'strict B2G Simulator Vol.1.3.3</h1>
+        <h1 style="font-size:22px;font-weight:700;color:var(--text);letter-spacing:-0.5px;margin-bottom:6px">d'strict B2G Simulator Vol.1.3.4</h1>
         <p style="font-size:13px;color:var(--muted);letter-spacing:0.2px">2026 KOSA 노임단가 기준 · SW사업 대가산정 가이드(2025 개정판)</p>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" id="home-menu-grid">
@@ -1019,6 +1146,24 @@ body{ line-height:1.5; }
       </div>
     </div>
 
+
+    <!-- 섹션 6: 화면 설정 (신규) -->
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <span style="width:28px;height:28px;background:var(--purple);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;flex-shrink:0">6</span>
+        <h2 style="font-size:16px;font-weight:700;color:var(--text);margin:0;letter-spacing:-0.3px">화면 설정</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="padding:12px 14px;background:var(--bg);border-radius:8px">
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px">📐 입력창 / 결과창 접기</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7">각 패널 상단의 <strong>◀ 입력창 접기</strong> / <strong>▶ 결과창 접기</strong> 버튼으로 한 화면에 원하는 패널만 집중해서 볼 수 있습니다. 접힌 상태에서 세로 탭(<strong>입력</strong>/<strong>결과</strong>)을 클릭하면 다시 펼쳐집니다. 설정은 새로고침 후에도 유지됩니다.</div>
+        </div>
+        <div style="padding:12px 14px;background:var(--bg);border-radius:8px">
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px">🔤 글자 크기 조절</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7">상단 우측 <strong>A-</strong> / <strong>A</strong> / <strong>A+</strong> 버튼으로 전체 화면의 글자 크기를 3단계로 조절할 수 있습니다. A- (88%) / A 기본 (100%) / A+ 크게 (114%). 설정은 새로고침 후에도 유지됩니다.</div>
+        </div>
+      </div>
+    </div>
     <!-- 섹션 5: FAQ -->
     <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:32px">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
@@ -1385,6 +1530,7 @@ function enterApp(){
   const nameEl=document.getElementById('tb-user-name');
   if(nameEl) nameEl.textContent=CURRENT_USER?CURRENT_USER.name+'님 ('+CURRENT_USER.role+')':'열람 중';
   buildLeft();bindActionBar();
+  initPanelState();
   autoSetScenarios();
 
   // 공유 링크로 접속한 경우 → 결과 자동 복원
@@ -1873,6 +2019,11 @@ function buildLeft(){
   const mms=getMMs();
   const res=compute(S.bid);
   el.innerHTML=`
+    <!-- 입력창 접기 버튼 -->
+    <div style="display:flex;justify-content:flex-end;margin-bottom:4px">
+      <button id="btn-collapse-left" class="panel-collapse-btn" onclick="toggleLeftPanel()">◀ 입력창 접기</button>
+    </div>
+    <button class="panel-tab" onclick="toggleLeftPanel()" title="입력창 펼치기">입력</button>
     <div class="sc">
       <div class="sc-head clickable" onclick=\"toggleAcc('order',event)\" style="display:flex;align-items:center;justify-content:space-between"><span class="sc-title">발주 정보</span><span id="acc-arr-order" style="font-size:11px;color:var(--hint)">${UI.acOpen.order?'▲':'▼'}</span></div>
       <div id="acc-body-order" style="display:${UI.acOpen.order?'block':'none'}">
@@ -2286,6 +2437,11 @@ function buildRight(){
   // ── 확정 후: 결과 화면 ──
   const res=compute(S.bid),scr={minBid:compute(S.minBid||70),cur:res};
   el.innerHTML=`
+    <!-- 결과창 접기 버튼 -->
+    <div style="display:flex;justify-content:flex-start;margin-bottom:6px">
+      <button id="btn-collapse-right" class="panel-collapse-btn" onclick="toggleRightPanel()">▶ 결과창 접기</button>
+    </div>
+    <button class="panel-tab" onclick="toggleRightPanel()" title="결과창 펼치기">결과</button>
     <div class="kpi-grid" id="kpi_grid">${buildKPIHTML(res)}</div>
     <div class="tabs" id="tabs_row">
       <button class="tab${UI.tab==='dashboard'?' on':''}" data-tab="dashboard">대시보드</button>
@@ -2700,7 +2856,7 @@ function buildExcel(){
   const N=v=>typeof v==='number'?v.toLocaleString('ko-KR'):'';
   const P=v=>typeof v==='number'?v.toFixed(2)+'%':'';
   const rows=[];
-  rows.push(["d'strict B2G Simulator Vol.1.3.3","","생성:",new Date().toLocaleString('ko-KR')]);
+  rows.push(["d'strict B2G Simulator Vol.1.3.4","","생성:",new Date().toLocaleString('ko-KR')]);
   rows.push(["프로젝트명",S.projectName||"(미입력)"]);
   rows.push([]);
   rows.push(["[투찰 정보]"]);
@@ -2742,7 +2898,7 @@ function buildWordReport(){
   const sep='='.repeat(50);
   const lines=[
     sep,
-    "  d'strict B2G Simulator Vol.1.3.3",
+    "  d'strict B2G Simulator Vol.1.3.4",
     "  공공사업 예산 분석 보고서",
     sep,
     "프로젝트명: "+(S.projectName||"(미입력)"),
@@ -2782,7 +2938,7 @@ function buildWordReport(){
     "",
     sep,
     "d'strict 2026년 노임단가 기준 · 원 단위 미만 절삭",
-    "d'strict B2G Simulator Vol.1.3.3",
+    "d'strict B2G Simulator Vol.1.3.4",
     sep,
   ];
   return '﻿'+lines.join('\r\n');
@@ -2791,7 +2947,7 @@ function buildWordReport(){
 function buildPPTNotes(){
   const r=compute(S.bid),mms=getMMs();
   const lines=[
-    "━━━ PPT 발표 노트 — d'strict B2G Simulator Vol.1.3.3 ━━━",
+    "━━━ PPT 발표 노트 — d'strict B2G Simulator Vol.1.3.4 ━━━",
     "",
     "【슬라이드 1: 프로젝트 개요】",
     "- 프로젝트명: "+(S.projectName||"(미입력)"),
@@ -2820,7 +2976,7 @@ function buildPPTNotes(){
     "- 현재 투찰율 "+S.bid.toFixed(2)+"%: 영업이익 "+fmtW(r.op)+" / 이익률 "+r.mg.toFixed(2)+"%",
     "",
     ...(S.memo?["【슬라이드 6: 특이사항】",S.memo,""]:[]),
-    "━━━ d'strict 2026년 노임단가 기준 · d'strict B2G Simulator Vol.1.3.3 ━━━",
+    "━━━ d'strict 2026년 노임단가 기준 · d'strict B2G Simulator Vol.1.3.4 ━━━",
   ];
   return '﻿'+lines.join('\r\n');
 }
@@ -2922,7 +3078,7 @@ async function exportDstrictXLSX(){
 
   // ─ 1행: 타이틀 ─
   const rows=[];
-  rows.push(["d'strict B2G Simulator Vol.1.3.3  ─  "+( S.projectName||'프로젝트명 미입력'),'','','','생성일:',today,'']);
+  rows.push(["d'strict B2G Simulator Vol.1.3.4  ─  "+( S.projectName||'프로젝트명 미입력'),'','','','생성일:',today,'']);
   M(0,0,0,6); // 타이틀 전체 병합은 xlsx CE에서 불가 → 컬럼별로 처리
 
   // ─ 2행: 공백 ─
@@ -3029,7 +3185,7 @@ async function exportDstrictXLSX(){
 
   // ─ 푸터 ─
   rows.push(['','','','','','','']);
-  rows.push(["d'strict 2026년 노임단가 기준 · 원 단위 미만 절삭 · d'strict B2G Simulator Vol.1.3.3",'','','','','','']);
+  rows.push(["d'strict 2026년 노임단가 기준 · 원 단위 미만 절삭 · d'strict B2G Simulator Vol.1.3.4",'','','','','','']);
 
   // 시트에 데이터 쓰기
   XLSX.utils.sheet_add_aoa(ws1, rows, {origin:'A1'});
@@ -3392,7 +3548,7 @@ async function exportDstrictDOCX(){
   // ── 타이틀 ──
   const titlePara=new Paragraph({
     children:[
-      ko("d'strict B2G Simulator Vol.1.3.3",{bold:true,size:30,color:'FFFFFF',characterSpacing:-14}),
+      ko("d'strict B2G Simulator Vol.1.3.4",{bold:true,size:30,color:'FFFFFF',characterSpacing:-14}),
       en('  '+today,{size:20,color:'AAAAAA'}),
     ],
     shading:{type:ShadingType.SOLID,fill:'000000'},
@@ -3508,7 +3664,7 @@ async function exportDstrictDOCX(){
 
   // 푸터
   const footerPara=new Paragraph({
-    children:[ko("d'strict 2026년 노임단가 기준 · 원 단위 미만 절삭 · d'strict B2G Simulator Vol.1.3.3",
+    children:[ko("d'strict 2026년 노임단가 기준 · 원 단위 미만 절삭 · d'strict B2G Simulator Vol.1.3.4",
       {size:16,color:'A3A29C',characterSpacing:-10})],
     spacing:{before:240},
   });
@@ -3575,6 +3731,58 @@ function initFontScale(){
 
 // 앱 시작 시 적용
 initFontScale();
+
+/* ── 패널 접기/펼치기 ── */
+function toggleLeftPanel(){
+  const left=document.getElementById('left');
+  const right=document.getElementById('right');
+  const btn=document.getElementById('btn-collapse-left');
+  const isCollapsed=left.classList.contains('collapsed');
+  if(isCollapsed){
+    // 펼치기
+    left.classList.remove('collapsed');
+    right.classList.remove('expanded');
+    left.style.width='';
+    right.style.width='';
+    if(btn){btn.innerHTML='◀ 입력창 접기';}
+  } else {
+    // 접기
+    left.classList.add('collapsed');
+    right.classList.add('expanded');
+    right.style.width='calc(100% - 36px)';
+    if(btn){btn.innerHTML='▶ 펼치기';}
+  }
+  localStorage.setItem('b2g_left_collapsed', isCollapsed?'0':'1');
+}
+
+function toggleRightPanel(){
+  const left=document.getElementById('left');
+  const right=document.getElementById('right');
+  const btn=document.getElementById('btn-collapse-right');
+  const isCollapsed=right.classList.contains('collapsed');
+  if(isCollapsed){
+    // 펼치기
+    right.classList.remove('collapsed');
+    left.classList.remove('expanded');
+    left.style.width='';
+    right.style.width='';
+    if(btn){btn.innerHTML='▶ 결과창 접기';}
+  } else {
+    // 접기
+    right.classList.add('collapsed');
+    left.classList.add('expanded');
+    left.style.width='calc(100% - 36px)';
+    if(btn){btn.innerHTML='◀ 펼치기';}
+  }
+  localStorage.setItem('b2g_right_collapsed', isCollapsed?'0':'1');
+}
+
+function initPanelState(){
+  const lc=localStorage.getItem('b2g_left_collapsed')==='1';
+  const rc=localStorage.getItem('b2g_right_collapsed')==='1';
+  if(lc) toggleLeftPanel();
+  if(rc) toggleRightPanel();
+}
 function download(content,filename,mime){
   const blob=new Blob([content],{type:mime});const url=URL.createObjectURL(blob);
   const a=document.createElement('a');a.href=url;a.download=filename;
@@ -3613,6 +3821,9 @@ function resetShareModal(){
   const txt=document.getElementById('btn-create-txt');
   if(btn){btn.disabled=false;btn.style.background='';}
   if(txt)txt.textContent='공유 링크 생성';
+  // 이전에 성공 이력이 있으면 안내 숨기기
+  const guideEl=document.getElementById('share-setup-guide');
+  if(guideEl)guideEl.style.display=localStorage.getItem('b2g_share_ok')==='1'?'none':'block';
 }
 
 async function createShareLink(){
@@ -3636,7 +3847,7 @@ async function createShareLink(){
   document.getElementById('share-err').style.display='none';
 
   const payload={
-    _app:'B2G Simulator Vol.1.3.3',
+    _app:'B2G Simulator Vol.1.3.4',
     _ts:new Date().toISOString(),
     _ro:SHARE_OPT==='ro',
     base:S.base,bid:S.bid,oh:S.oh,tr:S.tr,wd:S.wd,
@@ -3698,7 +3909,11 @@ async function createShareLink(){
       return;
     }
 
-    // 공유 링크 생성
+    // 공유 링크 생성 성공 → 최초 안내 숨기기 (다음 번 접근 시도 불필요)
+    localStorage.setItem('b2g_share_ok','1');
+    const guideEl=document.getElementById('share-setup-guide');
+    if(guideEl)guideEl.style.display='none';
+
     const baseURL=location.href.split('?')[0].split('#')[0];
     const shareURL=baseURL+'?bin='+binId;
 
@@ -4344,7 +4559,7 @@ function exportCompareXLSX(){
   const acct=v=>typeof v==='number'?v.toLocaleString('ko-KR'):'';
   const pct=v=>typeof v==='number'?v.toFixed(2)+'%':'';
   const rows=[];
-  rows.push(["d'strict B2G Simulator Vol.1.3.3 — 프로젝트 비교 분석","","","생성:",new Date().toLocaleString('ko-KR')]);
+  rows.push(["d'strict B2G Simulator Vol.1.3.4 — 프로젝트 비교 분석","","","생성:",new Date().toLocaleString('ko-KR')]);
   rows.push(["선택 프로젝트",...projects.map(p=>p.name)]);
   rows.push(["분석 일시",...projects.map(p=>p.ts)]);
   rows.push([]);
@@ -4418,7 +4633,7 @@ function captureSnapshot(fmt){
   // ── 헤더 바 ──
   ctx.fillStyle='#1a1a18';
   rr(PAD,PAD,W-PAD*2,HDR,{tl:16,tr:16,bl:0,br:0}); ctx.fill();
-  txt("d'strict B2G Simulator Vol.1.3.3", PAD+28, PAD+30, '700 22px Arial','#fff');
+  txt("d'strict B2G Simulator Vol.1.3.4", PAD+28, PAD+30, '700 22px Arial','#fff');
   txt(S.projectName||'프로젝트 미지정', PAD+28, PAD+56, '400 15px Arial','rgba(255,255,255,.55)');
   txt(new Date().toLocaleDateString('ko-KR'), W-PAD-28, PAD+42, '400 14px Arial','rgba(255,255,255,.55)','right');
   const bidLabel='투찰율 '+S.bid.toFixed(2)+'%';
@@ -4526,7 +4741,7 @@ function captureSnapshot(fmt){
 
   // ── 푸터 ──
   ctx.fillStyle='#e8e6df'; ctx.fillRect(PAD,H-PAD-20,W-PAD*2,1);
-  txt("d'strict 2026년 노임단가 기준 · 원 단위 미만 절삭 · d'strict B2G Simulator Vol.1.3.3",
+  txt("d'strict 2026년 노임단가 기준 · 원 단위 미만 절삭 · d'strict B2G Simulator Vol.1.3.4",
     PAD+8, H-PAD-5, '400 13px Arial','#a3a29c');
 
   // ── 다운로드 ──
